@@ -1,6 +1,6 @@
 # Contributing to PFP
 
-First off, thank you for considering contributing to the Product Feed Processor (PFP) runtime! 
+First off, thank you for considering contributing to the Product Feed Protocol (PFP) runtime! 
 
 This document outlines the process for setting up a development environment, formatting your code, running tests, and proposing changes.
 

@@ -9,7 +9,7 @@ Only the latest major version of the PFP runtime is actively supported for secur
 
 ## Reporting a Vulnerability
 
-We take the security of the Product Feed Processor (PFP) runtime very seriously. 
+We take the security of the Product Feed Protocol (PFP) runtime very seriously. 
 
 If you discover a security vulnerability within PFP, please do NOT report it by creating a public GitHub issue. Instead, please follow the process below:
 

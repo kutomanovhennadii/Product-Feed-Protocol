@@ -1,6 +1,6 @@
 # PFP Agent Integration Pack
 
-This document (`AGENT.md`) alongside `agent_contract.json` is designed for AI agents (GitHub Copilot, cursor, auto-gpt, etc.) to quickly understand the surface area of the Product Feed Processor (PFP) without parsing human-oriented paragraphs.
+This document (`AGENT.md`) alongside `agent_contract.json` is designed for AI agents (GitHub Copilot, cursor, auto-gpt, etc.) to quickly understand the surface area of the Product Feed Protocol (PFP) without parsing human-oriented paragraphs.
 
 ## 1. Source of Truth
 * **Runtime exports:** `PFPFactory`, `PFPWorker`, `FactoryConfigError`, `get_pfp_factory`.

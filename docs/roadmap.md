@@ -1,6 +1,6 @@
 # PFP Public Roadmap
 
-This document provides a high-level overview of the planned development phases for the Product Feed Processor (PFP) runtime. It is a living document driven by pragmatic needs, an AI-first approach, and independent maintainer constraints.
+This document provides a high-level overview of the planned development phases for the Product Feed Protocol (PFP) runtime. It is a living document driven by pragmatic needs, an AI-first approach, and independent maintainer constraints.
 
 ## Current Status: Initial Open Source Release (Phase 15 equivalent)
 Currently, PFP is focusing on stabilizing its public Git presence.

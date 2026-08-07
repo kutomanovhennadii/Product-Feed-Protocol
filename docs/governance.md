@@ -1,6 +1,6 @@
 # PFP Governance
 
-The Product Feed Processor (PFP) follows a maintainer-led governance model. This document defines the roles, decision-making processes, and community expectations.
+The Product Feed Protocol (PFP) follows a maintainer-led governance model. This document defines the roles, decision-making processes, and community expectations.
 
 ## Roles
 
