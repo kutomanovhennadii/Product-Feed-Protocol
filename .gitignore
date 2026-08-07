@@ -64,6 +64,9 @@ dmypy.json
 *.swp
 *.swo
 
+# Internal / Private (not for publication)
+internal/
+
 # Output / Artifacts
 examples/**/expected/output_actual.csv
 examples/**/expected/diagnostics_actual.json
