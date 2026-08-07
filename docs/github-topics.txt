@@ -1,3 +1,5 @@
+product-feed-protocol
+pfp
 stripe-product-catalog
 product-feed-spec
 shopify

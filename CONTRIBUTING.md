@@ -2,6 +2,8 @@
 
 First off, thank you for considering contributing to the Product Feed Protocol (PFP) runtime! 
 
+Repository: [github.com/kutomanovhennadii/Product-Feed-Protocol](https://github.com/kutomanovhennadii/Product-Feed-Protocol)
+
 This document outlines the process for setting up a development environment, formatting your code, running tests, and proposing changes.
 
 ## 1. Development Environment Setup
@@ -13,7 +15,11 @@ You can set up a completely working local development environment in under 10 mi
 * Git
 
 ### Installation Steps
-1. Fork and clone the repository.
+1. Fork and clone the repository:
+   ```bash
+   git clone https://github.com/kutomanovhennadii/Product-Feed-Protocol.git
+   cd Product-Feed-Protocol
+   ```
 2. Create and activate a virtual environment:
    ```bash
    python -m venv .venv

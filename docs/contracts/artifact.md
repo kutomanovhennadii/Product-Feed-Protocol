@@ -1,78 +1,78 @@
 # Produced Artifact Contract
 
-Этот документ описывает выходной artifact contract Product Feed Protocol.
+This document describes the output artifact contract of Product Feed Protocol.
 
 ## Scope
 
-- `ProducedArtifact` как runtime output unit;
-- `payload` contract;
-- `ArtifactMetadata` fields и их смысл;
-- различие между payload bytes и metadata;
-- базовые invariants для artifact payload и metadata.
+- `ProducedArtifact` as the runtime output unit;
+- the `payload` contract;
+- `ArtifactMetadata` fields and their meaning;
+- the distinction between payload bytes and metadata;
+- baseline invariants for artifact payload and metadata.
 
 ## Source Of Truth
 
 - `src/pfp_core/contracts/produced_artifact.py`
 - `src/pfp_core/contracts/artifact_metadata.py`
-- artifact construction в `src/pfp_core/artifact_production/artifact_producer.py`
+- artifact construction in `src/pfp_core/artifact_production/artifact_producer.py`
 - `examples/01_minimal_quickstart/expected/output.csv`
 
 ## Contract Summary
 
-На текущем этапе produced artifact в PFP выражается объектом `ProducedArtifact`, который объединяет:
+At the current stage, a produced artifact in PFP is expressed by the `ProducedArtifact` object, which combines:
 
-1. `payload: Iterable[bytes]` — byte chunks итогового artifact payload;
-2. `metadata: ArtifactMetadata` — identity и format descriptors для этого payload.
+1. `payload: Iterable[bytes]` — byte chunks of the resulting artifact payload;
+2. `metadata: ArtifactMetadata` — identity and format descriptors for that payload.
 
-Иначе говоря, runtime contract на artifact состоит не только из «получившегося файла», но из пары payload + metadata. Эти две части нужно интерпретировать раздельно.
+In other words, the runtime contract for an artifact consists not only of "the resulting file", but of a payload + metadata pair. These two parts must be interpreted separately.
 
 ## ProducedArtifact
 
-`ProducedArtifact` — dataclass-контейнер для одного сгенерированного feed artifact.
+`ProducedArtifact` is a dataclass container for a single generated feed artifact.
 
-Его поля:
+Its fields:
 
 - `payload: Iterable[bytes]`
 - `metadata: ArtifactMetadata`
 
-Практический смысл:
+Practical meaning:
 
-- `payload` содержит сами байты artifact content;
-- `metadata` описывает target, schema version, content type, encoding и identity-related context;
-- artifact contract не смешивает payload bytes с validation diagnostics или run-level summary.
+- `payload` holds the bytes of the artifact content itself;
+- `metadata` describes the target, schema version, content type, encoding, and identity-related context;
+- the artifact contract does not mix payload bytes with validation diagnostics or run-level summary.
 
 ## Payload Contract
 
-`ProducedArtifact.payload` документирован как `Iterable[bytes]`.
+`ProducedArtifact.payload` is documented as `Iterable[bytes]`.
 
-Это означает следующее:
+This means the following:
 
-- payload состоит из byte chunks, а не из строки, dict или path к файлу;
-- runtime может выдавать payload streaming-образом;
-- потребитель контракта должен быть готов итерировать chunks и собирать итоговое содержимое сам, если ему нужен один materialized blob;
-- payload contract описывает содержимое artifact, но не место его публикации и не publish-time outcome.
+- the payload consists of byte chunks, not of a string, a dict, or a path to a file;
+- the runtime may emit the payload in a streaming fashion;
+- a consumer of the contract must be ready to iterate over chunks and assemble the final content itself if it needs a single materialized blob;
+- the payload contract describes the content of the artifact, but not its publication location and not the publish-time outcome.
 
-Из docstring модели следует важная operational detail:
+An important operational detail follows from the model docstring:
 
-- до publish payload может быть generator-like iterable;
-- после publish payload может быть materialized и re-iterable.
+- before publish, the payload may be a generator-like iterable;
+- after publish, the payload may be materialized and re-iterable.
 
-Следовательно, public contract нельзя описывать как «всегда один `bytes` object» или как «всегда путь к файлу на диске».
+Consequently, the public contract cannot be described as "always a single `bytes` object" or as "always a path to a file on disk".
 
 ## Minimal Payload Example
 
-Минимальный живой example artifact payload из `examples/01_minimal_quickstart/expected/output.csv`:
+A minimal live example of an artifact payload from `examples/01_minimal_quickstart/expected/output.csv`:
 
 ```text
 id,title,description,link,availability
 SKU-1,Hello,World,https://example.com/sku-1,in_stock
 ```
 
-На уровне contract этот текст представляет собой сериализованный результат writer'а; в `ProducedArtifact.payload` он приходит как iterable byte chunks, а не как markdown/text abstraction.
+At the contract level, this text is the serialized result of a writer; in `ProducedArtifact.payload` it arrives as iterable byte chunks, not as a markdown/text abstraction.
 
 ## ArtifactMetadata
 
-`ArtifactMetadata` — frozen dataclass с полями:
+`ArtifactMetadata` is a frozen dataclass with the following fields:
 
 - `target: str`
 - `schema_version: str`
@@ -86,65 +86,65 @@ SKU-1,Hello,World,https://example.com/sku-1,in_stock
 
 ### `target`
 
-Идентификатор target system / target contract surface. Это не имя файла и не MIME type. Пример по коду: значения вроде `stripe.product`.
+The identifier of the target system / target contract surface. This is not a file name and not a MIME type. Example from the code: values such as `stripe.product`.
 
 ### `schema_version`
 
-Точная версия schema contract, с которой был собран artifact. Это поле связывает artifact с конкретной schema identity, а не просто с writer format.
+The exact version of the schema contract the artifact was built against. This field ties the artifact to a specific schema identity, not merely to a writer format.
 
 ### `generated_at`
 
-UTC timestamp генерации artifact. Это runtime timestamp создания artifact, а не publish timestamp внешней системы.
+The UTC timestamp of artifact generation. This is the runtime timestamp of artifact creation, not the publish timestamp of an external system.
 
 ### `content_type`
 
-MIME type payload, например `text/csv`. Это descriptor формата содержимого.
+The MIME type of the payload, for example `text/csv`. This is a descriptor of the content format.
 
 ### `encoding`
 
-Payload encoding, например `utf-8`. Это descriptor кодировки байтового содержимого.
+The payload encoding, for example `utf-8`. This is a descriptor of the byte content encoding.
 
 ### `artifact_profile`
 
-Опциональный profile, с которым был собран artifact, например `catalog_snapshot`. Полезен для differentiation между различными artifact modes внутри одного target surface.
+The optional profile the artifact was built with, for example `catalog_snapshot`. Useful for differentiating between distinct artifact modes within a single target surface.
 
 ### `filename_hint`
 
-Опциональная deterministic filename hint, которую runtime может сгенерировать для downstream publishing/archiving flows. Это hint, а не гарантия фактического publish location.
+An optional deterministic filename hint that the runtime may generate for downstream publishing/archiving flows. This is a hint, not a guarantee of the actual publish location.
 
 ## Payload Vs Metadata
 
-Различие между payload bytes и metadata принципиально:
+The distinction between payload bytes and metadata is fundamental:
 
-- payload отвечает на вопрос «какое содержимое produced artifact получилось»;
-- metadata отвечает на вопрос «как идентифицировать и интерпретировать этот artifact»;
-- payload не должен дублировать metadata fields внутри себя по контракту;
-- metadata не содержит самих payload bytes.
+- the payload answers the question "what content did the produced artifact end up with";
+- the metadata answers the question "how to identify and interpret this artifact";
+- by contract, the payload should not duplicate metadata fields inside itself;
+- the metadata does not contain the payload bytes themselves.
 
-Практически это значит, что CSV content и поля вроде `target`, `schema_version`, `generated_at` принадлежат разным слоям одного artifact contract.
+In practice this means that CSV content and fields such as `target`, `schema_version`, and `generated_at` belong to different layers of the same artifact contract.
 
 ## Runtime Construction Semantics
 
-По текущему `artifact_producer.py` metadata собирается из:
+According to the current `artifact_producer.py`, metadata is assembled from:
 
 - `prepared.target_id` -> `target`;
 - `prepared.schema_ref.schema_version` -> `schema_version`;
 - `generated_at_utc` -> `generated_at`;
-- writer spec -> `content_type` и file extension for `filename_hint`;
+- writer spec -> `content_type` and file extension for `filename_hint`;
 - prepared encoding -> `encoding`;
 - compiled schema profile -> `artifact_profile`.
 
-Следствие: artifact metadata не является произвольной пользовательской нагрузкой, а формируется как часть runtime contract из prepared schema + writer configuration.
+Consequence: artifact metadata is not an arbitrary user-supplied payload; it is formed as part of the runtime contract from the prepared schema plus writer configuration.
 
 ## Invariants
 
-- `ProducedArtifact` всегда состоит из `payload` и `metadata`.
-- `payload` интерпретируется как iterable of byte chunks.
-- `metadata` интерпретируется как format/identity descriptor, а не как publish result.
-- `target`, `schema_version`, `generated_at`, `content_type`, `encoding` являются обязательными полями `ArtifactMetadata`.
-- `artifact_profile` и `filename_hint` являются optional, но если присутствуют, должны относиться к текущему artifact, а не к внешнему transport state.
-- Contract не обещает, что payload уже материализован в один `bytes` object.
-- Contract не обещает, что artifact уже опубликован во внешнюю систему или сохранён на диск.
+- `ProducedArtifact` always consists of `payload` and `metadata`.
+- `payload` is interpreted as an iterable of byte chunks.
+- `metadata` is interpreted as a format/identity descriptor, not as a publish result.
+- `target`, `schema_version`, `generated_at`, `content_type`, and `encoding` are required fields of `ArtifactMetadata`.
+- `artifact_profile` and `filename_hint` are optional, but when present they must relate to the current artifact, not to external transport state.
+- The contract does not promise that the payload is already materialized into a single `bytes` object.
+- The contract does not promise that the artifact has already been published to an external system or saved to disk.
 
 ## Out Of Scope
 

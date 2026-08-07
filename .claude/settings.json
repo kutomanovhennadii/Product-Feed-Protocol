@@ -22,7 +22,8 @@
       "PowerShell(git -C C:\\\\Repository\\\\A2S-protocol ls-remote --get-url origin)",
       "PowerShell(git -C C:\\\\Repository\\\\A2S-protocol remote set-url origin https://github.com/kutomanovhennadii/Product-Feed-Protocol.git)",
       "PowerShell(git -C C:\\\\Repository\\\\A2S-protocol ls-remote --heads origin 2>&1)",
-      "PowerShell(git -C C:\\\\Repository\\\\A2S-protocol push origin main)"
+      "PowerShell(git -C C:\\\\Repository\\\\A2S-protocol push origin main)",
+      "Bash(python -c ' *)"
     ]
   }
 }

@@ -1,5 +1,11 @@
 # Product Feed Protocol (PFP)
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-blue.svg)](https://www.python.org/downloads/)
+[![Repository](https://img.shields.io/badge/GitHub-Product--Feed--Protocol-181717?logo=github)](https://github.com/kutomanovhennadii/Product-Feed-Protocol)
+
+Repository: [github.com/kutomanovhennadii/Product-Feed-Protocol](https://github.com/kutomanovhennadii/Product-Feed-Protocol)
+
 Product Feed Protocol (PFP) is for teams that need to prepare a merchant catalog for external agentic-commerce platforms in a fast and predictable way. The project is built on top of the `Stripe Product catalog` and `Product Feed Spec` documents: they define the target protocol shape and constraints, while PFP provides the runtime that maps merchant product data into those external surfaces.
 
 The practical value of PFP is not just feed conversion. It gives a team one controlled process for mapping, normalization, validation, artifact production, and delivery preparation. Instead of spreading this logic across ad hoc scripts, PFP compiles configuration into a runnable worker and returns a machine-readable `ExecutionReport` with outcome, diagnostics, and produced artifacts.
@@ -12,7 +18,14 @@ PFP is not a checkout server, payment orchestrator, or ACP host. Its role is to 
 
 ## Installation
 
-From the repository root:
+Clone the repository:
+
+```bash
+git clone https://github.com/kutomanovhennadii/Product-Feed-Protocol.git
+cd Product-Feed-Protocol
+```
+
+Then, from the repository root:
 
 ```bash
 pip install .

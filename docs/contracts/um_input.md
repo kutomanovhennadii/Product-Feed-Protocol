@@ -1,13 +1,13 @@
 # Unified Model Input Contract
 
-Этот документ описывает текущий входной contract Product Feed Protocol до стадии schema-bound artifact production.
+This document describes the current input contract of Product Feed Protocol up to the stage of schema-bound artifact production.
 
 ## Scope
 
-- raw source records на входе connector/runtime;
-- mapping semantics в UM-space;
+- raw source records at the connector/runtime input;
+- mapping semantics in UM-space;
 - expected target-path behavior;
-- required-field handling и related invariants.
+- required-field handling and related invariants.
 
 ## Source Of Truth
 
@@ -18,39 +18,39 @@
 
 ## Contract Summary
 
-Входной contract PFP на текущем этапе не задаётся отдельным canonical UM dataclass. Реальный входной surface складывается из двух частей:
+At the current stage, the PFP input contract is not defined by a separate canonical UM dataclass. The real input surface is composed of two parts:
 
-1. adapter-level raw records, приходящих как dict-like objects с top-level string keys;
-2. mapping configuration, которая роутит эти source keys в UM-space target paths.
+1. adapter-level raw records arriving as dict-like objects with top-level string keys;
+2. mapping configuration that routes those source keys into UM-space target paths.
 
-Иначе говоря, runtime ожидает не «готовый Unified Model object», а поток сырьевых records, для которых заранее описаны mapping rules.
+In other words, the runtime does not expect a "ready-made Unified Model object", but a stream of raw records for which mapping rules have been described in advance.
 
 ## Raw Source Records
 
-`ConnectorMapper.apply_stream(...)` принимает `Iterable[Mapping[str, Any]]`. Это означает следующее:
+`ConnectorMapper.apply_stream(...)` accepts `Iterable[Mapping[str, Any]]`. This means the following:
 
-- каждый record должен вести себя как mapping по ключу;
-- source lookup идёт по top-level key membership (`source_key in record`);
-- значения прокидываются дальше без type coercion на слое mapper;
-- unmapped source keys silently drop'аются и не попадают в output.
+- every record must behave as a mapping accessed by key;
+- source lookup goes through top-level key membership (`source_key in record`);
+- values are passed through without type coercion at the mapper layer;
+- unmapped source keys are silently dropped and do not reach the output.
 
-Минимальный живой пример raw input из `examples/01_minimal_quickstart/input/input.jsonl`:
+A minimal live example of raw input from `examples/01_minimal_quickstart/input/input.jsonl`:
 
 ```json
 {"sku":"SKU-1","item_id":"SKU-1","title":"Hello","description":"World","url":"https://example.com/sku-1","availability":"in_stock"}
 ```
 
-Этот payload является source record, а не готовым UM object.
+This payload is a source record, not a ready-made UM object.
 
 ## Mapping Rules
 
-Каждое правило mapping описывается `ConnectorFieldMapping`:
+Each mapping rule is described by `ConnectorFieldMapping`:
 
-- `source: str` — имя поля в raw input record;
-- `target: str` — dot-separated path в UM-space;
-- `required: bool` — обязательность source field для данного record.
+- `source: str` — the field name in the raw input record;
+- `target: str` — a dot-separated path in UM-space;
+- `required: bool` — whether the source field is mandatory for the given record.
 
-Минимальный живой пример из `examples/01_minimal_quickstart/mapping.yaml`:
+A minimal live example from `examples/01_minimal_quickstart/mapping.yaml`:
 
 ```yaml
 mappings:
@@ -74,62 +74,62 @@ continue_on_error: true
 
 ## UM-Space Target Paths
 
-`ConnectorFieldMapping.target` задаётся как dot-separated path string. На текущем этапе это означает:
+`ConnectorFieldMapping.target` is defined as a dot-separated path string. At the current stage this means:
 
-- target path живёт в UM-space и выражается строкой вроде `product.item_id`;
-- mapper не материализует nested object tree автоматически;
-- output mapper'а содержит routed keys exactly as configured target strings;
-- interpretation этих target paths происходит дальше по pipeline, а не на слое `ConnectorMapper`.
+- the target path lives in UM-space and is expressed as a string such as `product.item_id`;
+- the mapper does not automatically materialize a nested object tree;
+- the mapper output contains routed keys exactly as the configured target strings;
+- interpretation of these target paths happens further down the pipeline, not at the `ConnectorMapper` layer.
 
-Практически это значит, что `product.item_id` и `inventory.availability` нужно читать как schema/mapping-space identifiers, а не как гарантию, что mapper создаёт вложенный словарь вида `{ "product": { "item_id": ... } }`.
+In practice this means that `product.item_id` and `inventory.availability` must be read as schema/mapping-space identifiers, not as a guarantee that the mapper creates a nested dictionary of the form `{ "product": { "item_id": ... } }`.
 
 ## No Nested Source Query Language
 
-Current mapping layer не гарантирует nested source traversal.
+The current mapping layer does not guarantee nested source traversal.
 
-Из текущей реализации следует:
+The current implementation implies that:
 
-- source lookup проверяет только наличие точного top-level ключа в record;
-- логика вида `source: product.id` как nested-query language этим контрактом не обещается;
-- dotted notation в `target` не означает dotted lookup в `source`;
-- документировать полноценный nested extraction сейчас было бы неверно.
+- source lookup only checks for the presence of an exact top-level key in the record;
+- logic such as `source: product.id` as a nested-query language is not promised by this contract;
+- dotted notation in `target` does not imply dotted lookup in `source`;
+- documenting full nested extraction at this point would be incorrect.
 
-Если input producer хочет использовать nested data, такой behavior должен быть явно подтверждён другим adapter/mapping слоем. Текущий `ConnectorMapper` сам по себе этого не реализует.
+If an input producer wants to use nested data, such behavior must be explicitly confirmed by another adapter/mapping layer. The current `ConnectorMapper` does not implement it on its own.
 
 ## Required Field Behavior
 
-`ConnectorMappingConfig` содержит ordered tuple mappings и флаг `continue_on_error`.
+`ConnectorMappingConfig` holds an ordered tuple of mappings and a `continue_on_error` flag.
 
-Поведение обязательных полей сейчас такое:
+Required-field behavior is currently as follows:
 
-- если required source field присутствует, mapper записывает значение в configured target;
-- если required source field отсутствует и `continue_on_error=true`, record skip'ается целиком, а runtime пишет warning в log pipeline;
-- если required source field отсутствует и `continue_on_error=false`, выбрасывается `ConnectorMappingValidationError` и поток останавливается;
-- если optional field отсутствует, оно просто не попадает в output и warning не создаётся.
+- if a required source field is present, the mapper writes the value into the configured target;
+- if a required source field is missing and `continue_on_error=true`, the record is skipped entirely and the runtime writes a warning into the log pipeline;
+- if a required source field is missing and `continue_on_error=false`, a `ConnectorMappingValidationError` is raised and the stream stops;
+- if an optional field is missing, it simply does not reach the output and no warning is produced.
 
-Следствие для input contract: обязательность задаётся не schema-файлом input record, а mapping configuration plus `continue_on_error` policy.
+Consequence for the input contract: mandatoriness is defined not by a schema file for the input record, but by the mapping configuration plus the `continue_on_error` policy.
 
 ## Output Of Mapping Layer
 
-На выходе mapping layer yield'ится `Mapping[str, Any]`, где:
+The mapping layer yields `Mapping[str, Any]`, where:
 
-- keys соответствуют configured UM-space target paths;
-- values остаются теми же, что пришли из source record;
-- только mapped fields присутствуют в output;
-- skipped records не yield'ятся вообще.
+- keys correspond to the configured UM-space target paths;
+- values remain the same as those that arrived from the source record;
+- only mapped fields are present in the output;
+- skipped records are not yielded at all.
 
 ## Invariants
 
-- Raw input record должен быть dict-like и поддерживать top-level key lookup.
-- `source` в mapping rules интерпретируется как exact source field name.
-- `target` интерпретируется как UM-space identifier string.
-- Current mapper не обещает nested source traversal.
-- Current mapper не обещает nested object materialization по dotted target path.
-- Missing required field behavior полностью зависит от `continue_on_error`.
+- A raw input record must be dict-like and support top-level key lookup.
+- `source` in mapping rules is interpreted as an exact source field name.
+- `target` is interpreted as a UM-space identifier string.
+- The current mapper does not promise nested source traversal.
+- The current mapper does not promise nested object materialization along a dotted target path.
+- Missing required field behavior depends entirely on `continue_on_error`.
 
 ## Out Of Scope
 
 - artifact payload contract;
 - aggregate validation outcome;
 - diagnostic item schema;
-- compatibility rules между всеми contract surfaces.
+- compatibility rules across all contract surfaces.

@@ -11,7 +11,7 @@ Only the latest major version of the PFP runtime is actively supported for secur
 
 We take the security of the Product Feed Protocol (PFP) runtime very seriously. 
 
-If you discover a security vulnerability within PFP, please do NOT report it by creating a public GitHub issue. Instead, please follow the process below:
+If you discover a security vulnerability within PFP, please do NOT report it by creating a public GitHub issue in [the repository](https://github.com/kutomanovhennadii/Product-Feed-Protocol). Instead, please follow the process below:
 
 1. Send an email to [kutomanov.hennadii@gmail.com](mailto:kutomanov.hennadii@gmail.com).
 2. Include a detailed description of the vulnerability, including steps to reproduce.

@@ -5,6 +5,9 @@ description = "Python library for Stripe Product catalog and Product Feed Spec m
 authors = ["Kutomanov Hennadii <kutomanov.hennadii@gmail.com>"]
 license = "MIT"
 readme = "README.md"
+homepage = "https://github.com/kutomanovhennadii/Product-Feed-Protocol"
+repository = "https://github.com/kutomanovhennadii/Product-Feed-Protocol"
+documentation = "https://github.com/kutomanovhennadii/Product-Feed-Protocol/tree/main/docs"
 keywords = ["stripe-product-catalog", "product-feed-spec", "shopify", "shopify-catalog", "product-feed", "merchant-catalog", "product-catalog", "catalog-mapping", "catalog-validation", "catalog-transformation", "schema-validation", "agentic-commerce"]
 classifiers = [
   "Development Status :: 3 - Alpha",
