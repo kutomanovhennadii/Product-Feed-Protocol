@@ -1,0 +1,20 @@
+{
+  "clients": {
+    "http": {
+      "class": "pfp_runtime.publishing.clients.http_client.HttpDeliveryClient",
+      "iac_class": "pfp_runtime.publishing.clients.http_client.HttpClientIaC"
+    },
+    "http_streaming": {
+      "class": "pfp_runtime.publishing.clients.streaming_http_client.StreamingHttpDeliveryClient",
+      "iac_class": "pfp_runtime.publishing.clients.http_client.HttpClientIaC"
+    },
+    "sftp": {
+      "class": "pfp_runtime.publishing.clients.sftp_client.SftpDeliveryClient",
+      "iac_class": "pfp_runtime.publishing.clients.sftp_client.SftpClientIaC"
+    },
+    "noop": {
+      "class": "pfp_runtime.publishing.clients.noop_client.NoopClient",
+      "iac_class": "pfp_runtime.publishing.clients.noop_client.NoopClientIaC"
+    }
+  }
+}

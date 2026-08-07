@@ -1,0 +1,15 @@
+# HttpDeliveryClient IaC — Stripe Inventory+Price Feed (DIFF partial update)
+# Schema: stripe.inventory_price_feed-1.0.0
+# Docs: config/docs/04_publishing.md
+
+endpoint: ""  # TBD — endpoint для inventory/price feed не опубликован Stripe
+
+api_key_ref:
+  kind: env
+  value: STRIPE_API_KEY
+
+transport:
+  timeout_seconds: 60
+  # max_retries: 3
+  # retry_backoff_seconds: 2.0
+  # verify_tls: true

@@ -1,0 +1,8 @@
+{
+    "item_id": "SKU-123",
+    "title": "Test Product",
+    "price": {
+        "amount": 99.99,
+        "currency": "USD"
+    }
+}

@@ -1,0 +1,5 @@
+mappings:
+  - source: sku
+    target: product.item_id
+    required: true
+continue_on_error: true

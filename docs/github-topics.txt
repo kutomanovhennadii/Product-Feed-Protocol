@@ -1,0 +1,12 @@
+stripe-product-catalog
+product-feed-spec
+shopify
+shopify-catalog
+product-feed
+merchant-catalog
+product-catalog
+catalog-mapping
+catalog-validation
+catalog-transformation
+schema-validation
+agentic-commerce

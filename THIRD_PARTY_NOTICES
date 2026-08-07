@@ -1,0 +1,84 @@
+THIRD_PARTY_NOTICES
+===================
+
+This file lists the direct third-party runtime dependencies currently declared
+in pfp-public/pyproject.toml for the Product Feed Protocol (PFP) staging
+package.
+
+Scope of this notice
+--------------------
+
+- This file covers direct runtime dependencies declared in the main dependency
+  section of pyproject.toml.
+- Optional dependencies are listed separately by extra group.
+- Development and test-only dependencies are not listed here, because Story 1
+  is establishing the public repository root pack rather than a full build or
+  CI compliance inventory.
+- License data below was checked against upstream project license texts or
+  project license declarations available from the corresponding upstream
+  package/repository pages.
+
+Required runtime dependencies
+-----------------------------
+
+1. PyYAML
+   - Role in this project: YAML parsing and emission for runtime configuration.
+   - Upstream license: MIT License.
+
+2. pydantic
+   - Role in this project: typed data validation and runtime model contracts.
+   - Upstream license: MIT License.
+
+3. ijson
+   - Role in this project: iterative JSON parsing for streaming and low-memory
+     ingestion paths.
+   - Upstream license: BSD 3-Clause License.
+   - Note: the upstream ijson license file also includes additional notice text
+     for bundled YAJL-related components.
+
+Optional dependency groups
+--------------------------
+
+Extra group: prometheus
+
+1. prometheus-client
+   - Role in this project: optional Prometheus metrics export and telemetry.
+   - Upstream license: Apache License 2.0.
+
+Extra group: webhook
+
+1. fastapi
+   - Role in this project: optional webhook-facing HTTP API integration.
+   - Upstream license: MIT License.
+
+2. uvicorn
+   - Role in this project: optional ASGI server runtime for webhook delivery
+     surfaces.
+   - Upstream license: BSD 3-Clause License.
+
+3. httpx
+   - Role in this project: optional HTTP client support for webhook-related
+     integrations.
+   - Upstream license: BSD 3-Clause License.
+
+Extra group: s3
+
+1. boto3
+   - Role in this project: optional AWS S3 integration.
+   - Upstream license: Apache License 2.0.
+
+Extra group: sftp
+
+1. paramiko
+   - Role in this project: optional SFTP and SSH transport integration.
+   - Upstream license: GNU Lesser General Public License v2.1.
+
+Notes
+-----
+
+- This file is intentionally concise for Story 1. It is meant to make the
+  public repository root transparent about direct third-party runtime usage,
+  without pretending to be a full transitive dependency or legal-compliance
+  export.
+- If dependency sets change in later stories, this file should be updated to
+  match the current pyproject.toml runtime surface.

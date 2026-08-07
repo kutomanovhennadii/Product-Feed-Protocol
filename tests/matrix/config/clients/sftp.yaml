@@ -1,0 +1,12 @@
+host: sftp.example.test
+port: 22
+username: matrix
+remote_path: /feeds/matrix.csv
+password_ref:
+  kind: env
+  value: MATRIX_SFTP_PASSWORD
+transport:
+  timeout_seconds: 5
+  max_retries: 0
+  retry_backoff_seconds: 0
+  verify_ssh_host_key: false

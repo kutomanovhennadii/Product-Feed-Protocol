@@ -1,0 +1,6 @@
+id,title,description,link,availability
+SKU-100,Aurora Chair,Solid oak dining chair,https://example.test/products/aurora-chair,in_stock
+SKU-101,Beacon Shelf,,https://example.test/products/beacon-shelf,out_of_stock
+SKU-102,Cirrus Desk,Compact desk with cable tray,https://example.test/products/cirrus-desk,preorder
+SKU-103,Delta Stool,Powder-coated stool for kitchen islands,https://example.test/products/delta-stool,in_stock
+SKU-104,Ember Mirror,Rounded wall mirror with bronze trim,https://example.test/products/ember-mirror,backorder

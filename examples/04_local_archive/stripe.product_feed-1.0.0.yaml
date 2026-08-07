@@ -1,0 +1,123 @@
+header:
+  protocol_id: "stripe.product_feed"
+  schema_version: "1.0.0"
+  artifact_profile: "catalog_delta"
+  title: "Stripe Product Feed (CSV) — minimal compile-safe schema"
+  source_protocol:
+    provider: "stripe"
+    url: "N/A"
+    revision: "snapshot"
+    retrieved_at: "2026-02-16"
+
+input:
+  um_contract: "Unified Model items as dict-like objects."
+
+modes:
+  presence_semantics:
+    default: "omit_missing"
+    per_mode:
+      FULL: "omit_missing"
+      DIFF: "omit_missing"
+      DELETE: "omit_missing"
+
+output:
+  output_kind: "csv_row"
+  writer_id: "csv"
+  writer_config:
+    delimiter: ","
+    quotechar: "\""
+    escapechar: "\\"
+    include_header: true
+    line_terminator: "\n"
+    missing_value_marker: ""
+    null_value_marker: "__NULL__"
+    columns:
+      - "id"
+      - "title"
+      - "description"
+      - "link"
+      - "availability"
+  artifact:
+    content_type: "text/csv"
+    file_ext: ".csv"
+    file_extension: ".csv"
+    encoding: "utf-8"
+
+mapping:
+  output_kind: "csv_row"
+  delete_tombstone:
+    enabled: true
+    flag_path: "delete"
+    id_field: "id"
+  presence:
+    default: "omit_missing"
+    per_mode:
+      FULL: "omit_missing"
+      DIFF: "omit_missing"
+      DELETE: "omit_missing"
+  output_order:
+    - "id"
+    - "title"
+    - "description"
+    - "link"
+    - "availability"
+  fields:
+    id:
+      source:
+        path: "item_id"
+        required: true
+      transforms:
+        - op: "to_str"
+        - op: "trim"
+        - op: "truncate"
+          args:
+            max_length: 100
+      presence:
+        per_mode:
+          DELETE: "error_if_missing"
+    title:
+      source:
+        path: "title"
+        required: true
+      transforms:
+        - op: "to_str"
+        - op: "trim"
+        - op: "truncate"
+          args:
+            max_length: 150
+    description:
+      source:
+        path: "description"
+        required: false
+      transforms:
+        - op: "to_str"
+        - op: "trim"
+        - op: "truncate"
+          args:
+            max_length: 5000
+    link:
+      source:
+        path: "url"
+        required: false
+      transforms:
+        - op: "to_str"
+        - op: "trim"
+    availability:
+      source:
+        path: "inventory.availability"
+        required: false
+      transforms:
+        - op: "to_str"
+        - op: "lower"
+
+validation:
+  rules:
+    - id: "stripe.title.required"
+      applies_to:
+        field: "title"
+      module_id: "required"
+      config: {}
+      on_fail:
+        code: "STRIPE_TITLE_REQUIRED"
+        message: "title is required"
+        severity_hint: "ERROR"

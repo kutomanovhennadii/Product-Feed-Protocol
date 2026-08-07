@@ -1,0 +1,24 @@
+input:
+  format: jsonl
+  config:
+    connector_mapping: ../../mappings/generic_catalog.yaml
+
+producer:
+  schema_file: ../../../../schemas/stripe.product_feed/stripe.product_feed-1.0.0.yaml
+  policy_file: ../../../../config/policies.yaml
+
+output:
+  archive_type: s3_compat
+  archive_config: ../../config/archive/s3_compat.yaml
+  client_type: noop
+  client_config: ../../../../config/clients/noop.yaml
+
+observability:
+  labels:
+    environment: test
+    pipeline: matrix-archiver-s3-compat
+  logging:
+    level: INFO
+    flood_control_config: {}
+  telemetry:
+    provider: none

@@ -1,0 +1,18 @@
+# S3Archiver IaC — AWS S3 archiving
+# Docs: config/docs/04_publishing.md
+# Credentials: AWS credential chain (not specified in IaC)
+
+bucket: my-feed-archive
+filename_base: product_feed
+# generates key: product_feed_20260318_103000
+
+# optional
+# key_prefix: sent/
+# region: eu-west-1
+
+# optional — defaults shown
+# transport:
+#   timeout_seconds: 60.0
+#   max_retries: 3
+#   retry_backoff_seconds: 0.0
+#   verify_tls: true

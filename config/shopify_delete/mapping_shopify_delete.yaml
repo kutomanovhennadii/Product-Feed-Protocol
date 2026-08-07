@@ -1,0 +1,12 @@
+# mapping_shopify_delete.yaml
+# SC Delete payload → UM keys
+
+mappings:
+  - source: "id"        # Product GID from SC Delete (from admin_graphql_api_id)
+    target: "product.item_id"
+    required: true
+  - source: "delete"    # always true
+    target: "product.delete"
+    required: true
+
+continue_on_error: true

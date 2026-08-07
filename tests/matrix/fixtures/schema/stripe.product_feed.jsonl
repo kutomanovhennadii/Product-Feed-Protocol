@@ -1,0 +1,5 @@
+{"sku": "SKU-100", "item_id": "SKU-100", "name": "Aurora Chair", "description": "Solid oak dining chair", "url": "https://example.test/products/aurora-chair", "availability": "in_stock", "delete_flag": false}
+{"sku": "SKU-101", "item_id": "SKU-101", "name": "Beacon Shelf", "description": "", "url": "https://example.test/products/beacon-shelf", "availability": "out_of_stock", "delete_flag": false}
+{"sku": "SKU-102", "item_id": "SKU-102", "name": "Cirrus Desk", "description": "Compact desk with cable tray", "url": "https://example.test/products/cirrus-desk", "availability": "preorder", "delete_flag": false}
+{"sku": "SKU-103", "item_id": "SKU-103", "name": "Delta Stool", "description": "Powder-coated stool for kitchen islands", "url": "https://example.test/products/delta-stool", "availability": "in_stock", "delete_flag": false}
+{"sku": "SKU-104", "item_id": "SKU-104", "name": "Ember Mirror", "description": "Rounded wall mirror with bronze trim", "url": "https://example.test/products/ember-mirror", "availability": "backorder", "delete_flag": false}

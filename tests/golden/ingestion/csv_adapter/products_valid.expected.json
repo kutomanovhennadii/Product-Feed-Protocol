@@ -1,0 +1,13 @@
+{
+    "items": [
+        {
+            "kind": "upsert",
+            "item_id": "SKU-100"
+        },
+        {
+            "kind": "delete",
+            "item_id": "SKU-200"
+        }
+    ],
+    "diagnostics": []
+}

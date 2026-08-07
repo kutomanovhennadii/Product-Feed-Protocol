@@ -1,0 +1,47 @@
+{
+  "entries": [
+    {
+      "path": "openai.product_feed/openai.product_feed-1.0.0.yaml",
+      "protocol_id": "openai.product_feed",
+      "schema_version": "1.0.0",
+      "sha256": "42224cc2b6910eb23f95d13b9459e267dce446a7fdfe8ab2fd28983338fcebb5"
+    },
+    {
+      "path": "stripe.inventory_price_feed/stripe.inventory_price_feed-1.0.0.yaml",
+      "protocol_id": "stripe.inventory_price_feed",
+      "schema_version": "1.0.0",
+      "sha256": "f40f096e5edd4898c32a893c68f6be8760e3883457f18f3aef13b94f66c0f270"
+    },
+    {
+      "path": "stripe.product_feed/stripe.product_feed-1.0.0.yaml",
+      "protocol_id": "stripe.product_feed",
+      "schema_version": "1.0.0",
+      "sha256": "e105c45c91960001e53bde9b3a05c22e2a279ba0fe831b83c879caf41ad1d6b4"
+    },
+    {
+      "path": "stripe.shopify_bulk/stripe.shopify_bulk-1.0.0.yaml",
+      "protocol_id": "stripe.shopify_bulk",
+      "schema_version": "1.0.0",
+      "sha256": "6db3660359e6792fc76f75d6b93e2e208e99114f458d8fa0ad078ace1b9b6836"
+    },
+    {
+      "path": "stripe.shopify_delete/stripe.shopify_delete-1.0.0.yaml",
+      "protocol_id": "stripe.shopify_delete",
+      "schema_version": "1.0.0",
+      "sha256": "e9e3285de24256ca3a35b1d791233709acd6ffb7ed14a3c1a322a0a945b03adb"
+    },
+    {
+      "path": "stripe.shopify_inventory/stripe.shopify_inventory-1.0.0.yaml",
+      "protocol_id": "stripe.shopify_inventory",
+      "schema_version": "1.0.0",
+      "sha256": "2acf30c98aa34b35f9690b341991d85a356ef4d30a2ae01586212ccfbee5fcb6"
+    },
+    {
+      "path": "stripe.shopify_realtime/stripe.shopify_realtime-1.0.0.yaml",
+      "protocol_id": "stripe.shopify_realtime",
+      "schema_version": "1.0.0",
+      "sha256": "0530249fcbeee97b1dd04a9f02fb32d617de545465907df2d49fde649c082a5e"
+    }
+  ],
+  "version": 1
+}

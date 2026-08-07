@@ -1,0 +1,25 @@
+input:
+  format: json
+  config:
+    connector_mapping: ../../../../config/shopify_realtime/mapping_shopify_realtime.yaml
+
+producer:
+  schema_file: ../../../../schemas/stripe.shopify_realtime/stripe.shopify_realtime-1.0.0.yaml
+  policy_file: ../../../../config/shopify_realtime/policies_shopify_realtime.yaml
+  tax_mapping_file: ../../../../config/tax_mappings/shopify_to_stripe_ptc.json
+
+output:
+  archive_type: noop
+  archive_config: ../../../../config/archive/noop.yaml
+  client_type: noop
+  client_config: ../../../../config/clients/noop.yaml
+
+observability:
+  labels:
+    environment: test
+    pipeline: matrix-schema-shopify-realtime
+  logging:
+    level: INFO
+    flood_control_config: {}
+  telemetry:
+    provider: none

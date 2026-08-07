@@ -1,0 +1,10 @@
+{
+    "items": [
+        {
+            "id": "p-1",
+            "title": "Product A",
+            "description": "Desc A",
+            "url": "https://example.com/p1"
+        }
+    ]
+}

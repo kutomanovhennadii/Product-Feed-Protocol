@@ -1,0 +1,6 @@
+# LocalArchiver IaC — local filesystem archiving
+# Docs: config/docs/04_publishing.md
+
+output_dir: ./sent
+filename_base: product_feed
+# generates: ./sent/product_feed_20260318_103000

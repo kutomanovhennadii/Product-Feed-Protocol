@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell(git -C C:\\\\Repository\\\\A2S-protocol init)",
+      "PowerShell(git -C C:\\\\Repository\\\\A2S-protocol branch -M main)",
+      "PowerShell(git -C C:\\\\Repository\\\\A2S-protocol remote add origin https://github.com/kutomanovhennadii/A2S-protocol.git)",
+      "PowerShell(git -C C:\\\\Repository\\\\A2S-protocol status --short)",
+      "PowerShell(git -C C:\\\\Repository\\\\A2S-protocol symbolic-ref HEAD refs/heads/main)",
+      "PowerShell(git -C C:\\\\Repository\\\\A2S-protocol check-ignore .claude .env)",
+      "PowerShell(git -C C:\\\\Repository\\\\A2S-protocol config user.email)",
+      "PowerShell(git -C C:\\\\Repository\\\\A2S-protocol config user.name)",
+      "PowerShell(git -C C:\\\\Repository\\\\A2S-protocol add -A)"
+    ]
+  }
+}

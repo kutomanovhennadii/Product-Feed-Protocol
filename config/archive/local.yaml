@@ -1,0 +1,3 @@
+# LocalArchiver IaC — minimal config for smoke testing
+output_dir: ./sent
+filename_base: product_feed

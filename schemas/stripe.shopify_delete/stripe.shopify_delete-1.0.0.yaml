@@ -1,0 +1,77 @@
+header:
+  protocol_id: "stripe.shopify_delete"
+  schema_version: "1.0.0"
+  artifact_profile: "catalog_delete"
+  title: "Stripe Product Catalog Delete Feed (CSV) - shopify product delete"
+  source_protocol:
+    provider: "stripe"
+    url: "N/A"
+    revision: "snapshot"
+    retrieved_at: "2026-04-01"
+
+input:
+  um_contract: "Unified Model items as dict-like objects."
+
+modes:
+  presence_semantics:
+    default: "omit_missing"
+    per_mode:
+      FULL: "omit_missing"
+
+output:
+  output_kind: "csv_row"
+  writer_id: "csv"
+  writer_config:
+    delimiter: ","
+    quotechar: "\""
+    escapechar: "\\"
+    include_header: true
+    line_terminator: "\n"
+    missing_value_marker: ""
+    null_value_marker: "__NULL__"
+    columns:
+      - "id"
+      - "delete"
+  artifact:
+    content_type: "text/csv"
+    file_ext: ".csv"
+    file_extension: ".csv"
+    encoding: "utf-8"
+
+mapping:
+  output_kind: "csv_row"
+  # delete_tombstone intentionally absent.
+  # Tombstone would OMIT all fields except id_field, killing the delete column.
+  # Both fields (id, delete) are mapped directly via normal mapping.
+  presence:
+    default: "omit_missing"
+    per_mode:
+      FULL: "omit_missing"
+  output_order:
+    - "id"
+    - "delete"
+  fields:
+    id:
+      source:
+        path: "product.item_id"
+        required: true
+      transforms:
+        - op: "to_str"
+        - op: "trim"
+      presence:
+        per_mode:
+          FULL: "error_if_missing"
+    delete:
+      source:
+        path: "product.delete"
+        required: true
+      transforms:
+        - op: "to_str"
+        - op: "lower"
+
+validation:
+  # NOTE: validation rules with applies_to.field use flat dict.get() lookup,
+  # but UM items from connector are nested dicts (product.item_id, product.delete).
+  # Flat lookup yields MISSING → false DROP. Required-field checks rely on
+  # connector_mapping required:true + mapping-level source.required + presence.error_if_missing.
+  rules: []

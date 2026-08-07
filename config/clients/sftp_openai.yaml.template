@@ -1,0 +1,16 @@
+# SftpDeliveryClient IaC — OpenAI SFTP
+# Docs: config/docs/04_publishing.md
+
+host: sftp.openai.com
+username: my-feed-account
+remote_path: /feeds/product_feed.jsonl.gz
+
+private_key_ref:
+  kind: file
+  value: /run/secrets/openai_sftp_key
+
+transport:
+  timeout_seconds: 120
+  # optional; recommended values shown
+  # max_retries: 3
+  # verify_ssh_host_key: true

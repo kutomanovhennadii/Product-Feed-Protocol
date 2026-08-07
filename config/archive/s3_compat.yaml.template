@@ -1,0 +1,27 @@
+# S3CompatArchiver IaC — MinIO / Cloudflare R2 / Backblaze B2
+# Docs: config/docs/04_publishing.md
+
+endpoint: https://my-minio.internal:9000
+bucket: my-feed-archive
+filename_base: product_feed
+# generates key: product_feed_20260318_103000
+
+# optional
+# key_prefix: sent/
+
+access_key_ref:
+  kind: env
+  value: MINIO_ACCESS_KEY
+# alternative: kind: file, value: /run/secrets/minio_access_key
+
+secret_key_ref:
+  kind: env
+  value: MINIO_SECRET_KEY
+# alternative: kind: file, value: /run/secrets/minio_secret_key
+
+# optional — defaults shown
+# transport:
+#   timeout_seconds: 60.0
+#   max_retries: 3
+#   retry_backoff_seconds: 0.0
+#   verify_tls: true

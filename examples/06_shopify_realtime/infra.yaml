@@ -1,0 +1,25 @@
+input:
+  format: json
+  config:
+    connector_mapping: ./mapping.yaml
+
+producer:
+  schema_file: ./stripe.shopify_realtime-1.0.0.yaml
+  policy_file: ./policies.yaml
+  tax_mapping_file: ./shopify_to_stripe_ptc.json
+
+output:
+  archive_type: noop
+  archive_config: ./archive.noop.yaml
+  client_type: noop
+  client_config: ./client.noop.yaml
+
+observability:
+  labels:
+    environment: local
+    pipeline: shopify-catalog-realtime-example
+  logging:
+    level: INFO
+    flood_control_config: {}
+  telemetry:
+    provider: none

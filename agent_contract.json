@@ -1,0 +1,74 @@
+{
+    "version": "1.0",
+    "project": "Product Feed Processor (PFP)",
+    "purpose": "A machine-readable contract for AI agents integrating with PFP.",
+    "entrypoints": {
+        "module": "pfp_runtime",
+        "factory": "PFPFactory",
+        "factory_method": "build_worker",
+        "worker": "PFPWorker",
+        "factory_helper": "get_pfp_factory",
+        "usage_example": "from pathlib import Path; from pfp_runtime import PFPFactory; worker = PFPFactory().build_worker(infra_path=Path('examples/01_minimal_quickstart/infra.yaml')); report = worker.run(Path('examples/01_minimal_quickstart/input/input.jsonl').read_bytes())"
+    },
+    "parameters": {
+        "build_worker": {
+            "required": [
+                {
+                    "name": "infra_path",
+                    "type": "str or Path",
+                    "description": "Absolute or relative path to the main infra.yaml configuration file."
+                }
+            ]
+        },
+        "run": {
+            "required": [
+                {
+                    "name": "input_data",
+                    "type": "bytes",
+                    "description": "Raw input bytes passed to PFPWorker.run(...)."
+                }
+            ]
+        }
+    },
+    "error_model": {
+        "execution_report_statuses": [
+            "SUCCESS",
+            "FAILED"
+        ],
+        "failed_step_tokens": [
+            "INGESTION_EXTRACT",
+            "CORE_BUILD",
+            "PUBLISH",
+            "INTERNAL"
+        ],
+        "reason_codes": [
+            "INGESTION.EXTRACT_TIMEOUT",
+            "INGESTION.EXTRACT_ERROR",
+            "CORE.CONTRACT_ERROR",
+            "CORE.VALIDATION_FAILED",
+            "INTERNAL.ERROR",
+            "PUBLISH.TIMEOUT",
+            "PUBLISH.ERROR"
+        ]
+    },
+    "diff_semantics": {
+        "description": "Avoid incremental regex-based edits on YAMLs. Generate complete valid YAML representations. Obey determinism rules (generated_at).",
+        "reference": "docs/determinism.md"
+    },
+    "commands": {
+        "smoke_install": "pip install -e . && python -c \"from pfp_runtime import PFPFactory\"",
+        "basic_run": "cd examples/01_minimal_quickstart && python run.py",
+        "contract_validation": "pytest tests/test_agent_contract.py -q",
+        "fast_tests": "pytest tests/ -m \"not matrix and not e2e and not perf and not chaos\""
+    },
+    "references": {
+        "api_docs": "docs/api.md",
+        "yaml_reference": "config/docs/README.md",
+        "config_infrastructure": "config/docs/01_infra.md",
+        "config_mapping": "config/docs/02_mapping.md",
+        "config_policies": "config/docs/03_policies.md",
+        "determinism_rules": "docs/determinism.md",
+        "troubleshooting": "docs/troubleshooting.md",
+        "quickstart_example": "examples/01_minimal_quickstart/README.md"
+    }
+}

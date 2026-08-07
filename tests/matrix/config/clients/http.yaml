@@ -1,0 +1,6 @@
+endpoint: https://matrix.example.test/feed
+transport:
+  timeout_seconds: 5
+  max_retries: 0
+  retry_backoff_seconds: 0
+  verify_tls: false

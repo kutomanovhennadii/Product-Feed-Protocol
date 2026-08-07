@@ -1,0 +1,15 @@
+# HttpDeliveryClient IaC — OpenAI HTTP
+# Docs: config/docs/04_publishing.md
+
+endpoint: https://api.openai.com/v1/product-feed
+
+api_key_ref:
+  kind: env
+  value: OPENAI_API_KEY
+
+transport:
+  timeout_seconds: 30
+  # optional; recommended values shown
+  # max_retries: 3
+  # retry_backoff_seconds: 2.0
+  # verify_tls: true

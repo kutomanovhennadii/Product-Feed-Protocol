@@ -1,0 +1,7 @@
+bucket: phase10-matrix-tests
+filename_base: matrix_feed
+region: us-east-1
+transport:
+  timeout_seconds: 5
+  max_retries: 0
+  verify_tls: false

@@ -1,0 +1,28 @@
+{
+    "items": [
+        {
+            "kind": "upsert",
+            "item_id": "SKU-2"
+        }
+    ],
+    "diagnostics": [
+        {
+            "code": "INGESTION.UM_BUILD_ERROR",
+            "path": "ingestion:product.item_id",
+            "item_ref": "merchant_products:2",
+            "action": "DROP"
+        },
+        {
+            "code": "INGESTION.TRANSFORM_ERROR",
+            "path": "ingestion:product.delete",
+            "item_ref": "merchant_products:3",
+            "action": "DROP"
+        },
+        {
+            "code": "INGESTION.TRANSFORM_ERROR",
+            "path": "ingestion:product.item_id",
+            "item_ref": "merchant_products:5",
+            "action": "DROP"
+        }
+    ]
+}

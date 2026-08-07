@@ -1,0 +1,14 @@
+input:
+  format: csv
+  config:
+    connector_mapping: ./mapping.yaml
+
+output:
+  archive_type: noop
+  archive_config: ./tests/pfp_runtime/manifest/fixtures/pipeline_manifest_provider/archive.noop.yaml
+  client_type: noop
+  client_config: ./tests/pfp_runtime/manifest/fixtures/pipeline_manifest_provider/client.noop.yaml
+
+producer:
+  schema_file: ./stripe.product_feed-1.0.0.yaml
+  policy_file: ./policy.yaml

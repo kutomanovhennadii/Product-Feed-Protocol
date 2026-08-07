@@ -1,0 +1,12 @@
+﻿version: "1.0"
+core:
+  strictness:
+    strategy: "fail_on_error"
+  eligibility:
+    checkout_requirements:
+      merchant_fields:
+        - "seller_tos"
+        - "seller_privacy_policy"
+  fault_isolation:
+    strategy: "SKIP_ITEM"
+

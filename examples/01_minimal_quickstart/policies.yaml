@@ -1,0 +1,4 @@
+version: "1.0"
+core:
+  strictness:
+    strategy: "fail_on_error"

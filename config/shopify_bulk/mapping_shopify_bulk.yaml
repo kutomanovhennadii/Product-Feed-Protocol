@@ -1,0 +1,68 @@
+# mapping_shopify_bulk.yaml
+# Shopify GraphQL (after SC denormalization) → UM keys
+# Тривиальное переименование: source key → target UM-path. Без трансформаций.
+
+mappings:
+  # --- product.* ---
+  - source: "id"
+    target: "product.item_id"
+    required: true
+  - source: "title"
+    target: "product.title"
+    required: true
+  - source: "descriptionHtml"
+    target: "product.description"
+  - source: "onlineStoreUrl"
+    target: "product.url"
+  - source: "vendor"
+    target: "product.brand"
+  - source: "barcode"
+    target: "product.gtin"
+  - source: "sku"
+    target: "product.mpn"
+  - source: "image"
+    target: "product.image_url"
+  - source: "media"
+    target: "product.additional_image_urls"
+  - source: "category"
+    target: "product.category"
+  - source: "productType"
+    target: "product.product_category"
+  - source: "weight"
+    target: "product.weight"
+
+  # --- variant.* (group, options) ---
+  - source: "__parentProductId"
+    target: "variant.item_group_id"
+  - source: "__parentTitle"
+    target: "variant.item_group_title"
+  - source: "color"
+    target: "variant.color"
+  - source: "size"
+    target: "variant.size"
+
+  # --- inventory.* ---
+  - source: "availableForSale"
+    target: "inventory.availability"
+  - source: "inventoryQuantity"
+    target: "inventory.inventory_quantity"
+
+  # --- offer.* (scalar Money passthrough — "29.99", currency from merchant config) ---
+  - source: "price"
+    target: "offer.price"
+  - source: "compareAtPrice"
+    target: "offer.sale_price"
+
+  # --- fulfillment.* ---
+  - source: "shipping"
+    target: "fulfillment.shipping"
+
+  # --- tax (Паттерн 3: namespace aggregation — 2 UM-поля для map_tax_code;
+  #   category уже замаплен выше на product.category,
+  #   map_tax_code читает его через category_key: "category") ---
+  - source: "stripe_tax_code_override"
+    target: "product.tax_code_override"
+  - source: "taxable"
+    target: "product.taxable"
+
+continue_on_error: true

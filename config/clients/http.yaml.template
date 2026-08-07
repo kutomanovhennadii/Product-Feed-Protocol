@@ -1,0 +1,22 @@
+# HttpDeliveryClient IaC — generic HTTP client
+# Docs: config/docs/04_publishing.md
+
+endpoint: https://api.example.com/feed
+
+# optional: auth via API key
+# api_key_ref:
+#   kind: env
+#   value: MY_API_KEY
+# alternative: kind: file, value: /run/secrets/api_key
+
+# optional: auth via Bearer token
+# token_ref:
+#   kind: env
+#   value: MY_TOKEN
+
+transport:
+  timeout_seconds: 30
+  # optional; recommended values shown
+  # max_retries: 3
+  # retry_backoff_seconds: 2.0
+  # verify_tls: true

@@ -1,0 +1,2 @@
+id,title,description,link,availability
+SKU-3,Nested JSONL Example,Uses nested product and inventory objects,https://example.com/sku-3,in_stock

@@ -1,0 +1,312 @@
+header:
+  protocol_id: "stripe.shopify_realtime"
+  schema_version: "1.0.0"
+  artifact_profile: "catalog_realtime"
+  title: "Stripe Catalog Realtime Feed (CSV) — product_catalog_feed spec"
+  source_protocol:
+    provider: "stripe"
+    url: "N/A"
+    revision: "snapshot"
+    retrieved_at: "2026-03-31"
+
+input:
+  um_contract: "Unified Model items as dict-like objects (nested after _unflatten)."
+
+modes:
+  presence_semantics:
+    default: "omit_missing"
+    per_mode:
+      FULL: "omit_missing"
+
+output:
+  output_kind: "csv_row"
+  writer_id: "csv"
+  writer_config:
+    delimiter: ","
+    quotechar: "\""
+    escapechar: "\\"
+    include_header: true
+    line_terminator: "\n"
+    missing_value_marker: ""
+    null_value_marker: "__NULL__"
+    columns:
+      - "id"
+      - "title"
+      - "description"
+      - "link"
+      - "brand"
+      - "gtin"
+      - "mpn"
+      - "image_link"
+      - "additional_image_link"
+      - "google_product_category"
+      - "product_category"
+      - "condition"
+      - "weight"
+      - "item_group_id"
+      - "item_group_title"
+      - "color"
+      - "size"
+      - "availability"
+      - "inventory_quantity"
+      - "price"
+      - "sale_price"
+      - "shipping"
+      - "stripe_product_tax_code"
+  artifact:
+    content_type: "text/csv"
+    file_ext: ".csv"
+    file_extension: ".csv"
+    encoding: "utf-8"
+
+mapping:
+  output_kind: "csv_row"
+  delete_tombstone:
+    enabled: false
+  presence:
+    default: "omit_missing"
+    per_mode:
+      FULL: "omit_missing"
+  output_order:
+    - "id"
+    - "title"
+    - "description"
+    - "link"
+    - "brand"
+    - "gtin"
+    - "mpn"
+    - "image_link"
+    - "additional_image_link"
+    - "google_product_category"
+    - "product_category"
+    - "condition"
+    - "weight"
+    - "item_group_id"
+    - "item_group_title"
+    - "color"
+    - "size"
+    - "availability"
+    - "inventory_quantity"
+    - "price"
+    - "sale_price"
+    - "shipping"
+    - "stripe_product_tax_code"
+  fields:
+    id:
+      source:
+        path: "product.item_id"
+        required: true
+      transforms:
+        - op: "to_str"
+        - op: "trim"
+        - op: "truncate"
+          args:
+            max_length: 100
+      presence:
+        per_mode:
+          FULL: "error_if_missing"
+    title:
+      source:
+        path: "product.title"
+        required: true
+      transforms:
+        - op: "to_str"
+        - op: "trim"
+        - op: "truncate"
+          args:
+            max_length: 150
+    description:
+      source:
+        path: "product.description"
+        required: false
+      transforms:
+        - op: "strip_html"
+        - op: "to_str"
+        - op: "trim"
+        - op: "truncate"
+          args:
+            max_length: 5000
+    link:
+      source:
+        path: "product.url"
+        required: false
+      transforms:
+        - op: "to_str"
+        - op: "trim"
+    brand:
+      source:
+        path: "product.brand"
+        required: false
+      transforms:
+        - op: "to_str"
+        - op: "trim"
+        - op: "truncate"
+          args:
+            max_length: 70
+    gtin:
+      source:
+        path: "product.gtin"
+        required: false
+      transforms:
+        - op: "to_str"
+        - op: "trim"
+        - op: "truncate"
+          args:
+            max_length: 50
+    mpn:
+      source:
+        path: "product.mpn"
+        required: false
+      transforms:
+        - op: "to_str"
+        - op: "trim"
+        - op: "truncate"
+          args:
+            max_length: 70
+    image_link:
+      source:
+        path: "product.image_url"
+        required: false
+      transforms:
+        - op: "to_str"
+        - op: "trim"
+    additional_image_link:
+      source:
+        path: "product.additional_image_urls"
+        required: false
+      transforms:
+        - op: "to_str"
+        - op: "trim"
+    google_product_category:
+      source:
+        path: "product.category"
+        required: false
+      transforms:
+        - op: "to_str"
+        - op: "trim"
+    product_category:
+      source:
+        path: "product.product_category"
+        required: false
+      transforms:
+        - op: "to_str"
+        - op: "trim"
+        - op: "truncate"
+          args:
+            max_length: 750
+    condition:
+      source:
+        path: "product.condition"
+        required: false
+      transforms:
+        - op: "default_value"
+          args:
+            value: "new"
+        - op: "to_str"
+        - op: "lower"
+    weight:
+      source:
+        path: "product.weight"
+        required: false
+      transforms:
+        - op: "to_str"
+        - op: "trim"
+    item_group_id:
+      source:
+        path: "variant.item_group_id"
+        required: false
+      transforms:
+        - op: "to_str"
+        - op: "trim"
+        - op: "truncate"
+          args:
+            max_length: 70
+    item_group_title:
+      source:
+        path: "variant.item_group_title"
+        required: false
+      transforms:
+        - op: "to_str"
+        - op: "trim"
+        - op: "truncate"
+          args:
+            max_length: 150
+    color:
+      source:
+        path: "variant.color"
+        required: false
+      transforms:
+        - op: "to_str"
+        - op: "trim"
+        - op: "truncate"
+          args:
+            max_length: 100
+    size:
+      source:
+        path: "variant.size"
+        required: false
+      transforms:
+        - op: "to_str"
+        - op: "trim"
+        - op: "truncate"
+          args:
+            max_length: 20
+    availability:
+      source:
+        path: "inventory.availability"
+        required: false
+      transforms:
+        - op: "bool_to_availability"
+    inventory_quantity:
+      source:
+        path: "inventory.inventory_quantity"
+        required: false
+      transforms:
+        - op: "to_str"
+    price:
+      source:
+        path: "offer.price"
+        required: false
+      transforms:
+        - op: "format_price"
+          args:
+            currency: "USD"
+        - op: "trim"
+    sale_price:
+      source:
+        path: "offer.sale_price"
+        required: false
+      transforms:
+        - op: "format_price"
+          args:
+            currency: "USD"
+        - op: "trim"
+    shipping:
+      source:
+        path: "fulfillment.shipping"
+        required: false
+      transforms:
+        - op: "format_shipping"
+          args:
+            pattern: "{country}:{region}:{service}:{speed_range}:{price}"
+            defaults:
+              region: ""
+              min_handling_time: 0
+              max_handling_time: 0
+              min_transit_time: 0
+              max_transit_time: 0
+            separator: ","
+            strip_colons: true
+    stripe_product_tax_code:
+      source:
+        path: "product"
+        required: false
+      transforms:
+        - op: "map_tax_code"
+          args:
+            override_key: "tax_code_override"
+            category_key: "category"
+            taxable_key: "taxable"
+
+validation:
+  rules: []

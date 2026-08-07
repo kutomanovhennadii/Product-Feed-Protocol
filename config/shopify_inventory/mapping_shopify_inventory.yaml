@@ -1,0 +1,11 @@
+# mapping_shopify_inventory.yaml
+# Shopify webhook payload (as-is from SC) → UM keys
+
+mappings:
+  - source: "inventory_item_id"
+    target: "product.item_id"
+    required: true
+  - source: "available"
+    target: "inventory.quantity"
+
+continue_on_error: true

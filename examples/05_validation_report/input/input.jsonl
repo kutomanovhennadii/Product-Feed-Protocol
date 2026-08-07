@@ -1,0 +1,2 @@
+{"sku": "SKU-5A", "item_id": "SKU-5A", "title": "Valid Product", "description": "Included in the artifact", "url": "https://example.com/sku-5a", "availability": "in_stock"}
+{"sku": "SKU-5B", "item_id": "SKU-5B", "description": "Triggers schema validation diagnostics", "url": "https://example.com/sku-5b", "availability": "out_of_stock"}

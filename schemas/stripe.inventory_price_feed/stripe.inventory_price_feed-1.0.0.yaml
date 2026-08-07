@@ -1,0 +1,108 @@
+header:
+  protocol_id: "stripe.inventory_price_feed"
+  schema_version: "1.0.0"
+  title: "Stripe Inventory+Price Delta Feed (CSV) — minimal compile-safe schema"
+  artifact_profile: "inventory_price_delta"
+  source_protocol:
+    provider: "stripe"
+    url: "N/A"
+    revision: "snapshot"
+    retrieved_at: "2026-02-16"
+
+input:
+  um_contract: "Unified Model items as dict-like objects."
+
+modes:
+  presence_semantics:
+    default: "omit_missing"
+    per_mode:
+      DIFF: "omit_missing"
+
+output:
+  output_kind: "csv_row"
+  writer_id: "csv"
+  writer_config:
+    delimiter: ","
+    quotechar: "\""
+    escapechar: "\\"
+    include_header: true
+    line_terminator: "\n"
+    missing_value_marker: ""
+    null_value_marker: "__NULL__"
+    columns:
+      - "id"
+      - "price"
+      - "currency"
+      - "inventory_quantity"
+      - "availability"
+  artifact:
+    content_type: "text/csv"
+    file_ext: ".csv"
+    file_extension: ".csv"
+    encoding: "utf-8"
+
+mapping:
+  output_kind: "csv_row"
+  presence:
+    default: "omit_missing"
+    per_mode:
+      DIFF: "omit_missing"
+  output_order:
+    - "id"
+    - "price"
+    - "currency"
+    - "inventory_quantity"
+    - "availability"
+  fields:
+    id:
+      source:
+        path: "item_id"
+        required: true
+      transforms:
+        - op: "to_str"
+        - op: "trim"
+        - op: "truncate"
+          args:
+            max_length: 100
+    price:
+      source:
+        path: "inventory.price.amount"
+        required: false
+      transforms:
+        - op: "to_str"
+        - op: "trim"
+    currency:
+      source:
+        path: "inventory.price.currency"
+        required: false
+      transforms:
+        - op: "to_str"
+        - op: "trim"
+        - op: "lower"
+    inventory_quantity:
+      source:
+        path: "inventory.quantity"
+        required: false
+      transforms:
+        - op: "to_str"
+        - op: "trim"
+    availability:
+      source:
+        path: "inventory.availability"
+        required: false
+      transforms:
+        - op: "to_str"
+        - op: "trim"
+        - op: "lower"
+
+validation:
+  rules:
+    - id: "stripe.inventory_price.id.required"
+      applies_to:
+        field: "id"
+      module_id: "required"
+      config: {}
+      on_fail:
+        code: "STRIPE_ITEM_ID_REQUIRED"
+        message: "id is required for inventory/price delta"
+        severity_hint: "ERROR"

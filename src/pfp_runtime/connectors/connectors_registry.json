@@ -1,0 +1,64 @@
+{
+    "formats": {
+        "csv": {
+            "adapter": "pfp_runtime.connectors.adapters.csv_adapter.CsvAdapter",
+            "status": "active",
+            "constants": {
+                "max_input_bytes": 33554432,
+                "max_line_bytes": 262144,
+                "max_field_bytes": 131072
+            }
+        },
+        "json": {
+            "adapter": "pfp_runtime.connectors.adapters.json_adapter.JsonAdapter",
+            "status": "active",
+            "constants": {
+                "max_input_bytes": 33554432,
+                "max_json_depth": 32,
+                "max_json_container_items": 100000
+            }
+        },
+        "jsonl": {
+            "adapter": "pfp_runtime.connectors.adapters.jsonl_adapter.JsonlAdapter",
+            "status": "active",
+            "constants": {
+                "max_line_bytes": 262144,
+                "max_json_depth": 32,
+                "max_json_container_items": 100000
+            }
+        },
+        "rows": {
+            "adapter": "pfp_runtime.connectors.adapters.rows_adapter.RowsAdapter",
+            "status": "active",
+            "constants": {
+                "max_records": 50000
+            }
+        },
+        "streaming_json": {
+            "adapter": "pfp_runtime.connectors.adapters.streaming_json_adapter.StreamingJsonAdapter",
+            "status": "active",
+            "constants": {
+                "items_path": "item",
+                "max_record_bytes": 1048576
+            }
+        },
+        "streaming_jsonl": {
+            "adapter": "pfp_runtime.connectors.adapters.streaming_jsonl_adapter.StreamingJsonlAdapter",
+            "status": "active",
+            "constants": {
+                "max_line_bytes": 262144,
+                "max_json_depth": 32,
+                "max_json_container_items": 100000
+            }
+        },
+        "streaming_csv": {
+            "adapter": "pfp_runtime.connectors.adapters.streaming_csv_adapter.StreamingCsvAdapter",
+            "status": "active",
+            "constants": {
+                "csv_field_size_limit": 131072,
+                "delimiter": ",",
+                "has_header": true
+            }
+        }
+    }
+}

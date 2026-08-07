@@ -1,0 +1,5 @@
+[
+  {"id": "gid://shopify/Product/123456789", "delete": true},
+  {"id": "gid://shopify/Product/987654321", "delete": true},
+  {"delete": true}
+]

@@ -1,0 +1,5 @@
+{"sku": "SKU-300", "item_id": "SKU-300", "name": "Field Notes Set", "description": "Three-pack of dotted notebooks", "url": "https://example.test/products/field-notes", "availability": "in_stock", "delete_flag": false}
+{"sku": "SKU-301", "item_id": "SKU-301", "name": "Glow Pen", "description": "", "url": "https://example.test/products/glow-pen", "availability": "out_of_stock", "delete_flag": false}
+{"sku": "SKU-302", "item_id": "SKU-302", "name": "Harbor Tote", "description": "Waxed canvas tote bag", "url": "https://example.test/products/harbor-tote", "availability": "preorder", "delete_flag": false}
+{"sku": "SKU-303", "item_id": "SKU-303", "name": "Ion Clock", "description": "Minimal wall clock in matte black", "url": "https://example.test/products/ion-clock", "availability": "in_stock", "delete_flag": false}
+{"sku": "SKU-304", "item_id": "SKU-304", "name": "Juniper Tray", "description": "Stackable valet tray", "url": "https://example.test/products/juniper-tray", "availability": "backorder", "delete_flag": false}

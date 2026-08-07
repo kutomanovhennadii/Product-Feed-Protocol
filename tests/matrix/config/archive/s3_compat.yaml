@@ -1,0 +1,13 @@
+endpoint: http://127.0.0.1:9000
+bucket: phase10-matrix-tests
+filename_base: matrix_feed
+access_key_ref:
+  kind: env
+  value: MATRIX_S3_ACCESS_KEY
+secret_key_ref:
+  kind: env
+  value: MATRIX_S3_SECRET_KEY
+transport:
+  timeout_seconds: 5
+  max_retries: 0
+  verify_tls: false

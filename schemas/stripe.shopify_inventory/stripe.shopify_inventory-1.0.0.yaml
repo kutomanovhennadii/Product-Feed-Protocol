@@ -1,0 +1,87 @@
+header:
+  protocol_id: "stripe.shopify_inventory"
+  schema_version: "1.0.0"
+  artifact_profile: "inventory_price_delta"
+  title: "Stripe Inventory Feed (CSV) - shopify webhook inventory_levels_update"
+  source_protocol:
+    provider: "stripe"
+    url: "N/A"
+    revision: "snapshot"
+    retrieved_at: "2026-03-31"
+
+input:
+  um_contract: "Unified Model items as dict-like objects."
+
+modes:
+  presence_semantics:
+    default: "omit_missing"
+    per_mode:
+      FULL: "omit_missing"
+
+output:
+  output_kind: "csv_row"
+  writer_id: "csv"
+  writer_config:
+    delimiter: ","
+    quotechar: "\""
+    escapechar: "\\"
+    include_header: true
+    line_terminator: "\n"
+    missing_value_marker: ""
+    null_value_marker: "__NULL__"
+    columns:
+      - "id"
+      - "inventory_quantity"
+      - "availability"
+  artifact:
+    content_type: "text/csv"
+    file_ext: ".csv"
+    file_extension: ".csv"
+    encoding: "utf-8"
+
+mapping:
+  output_kind: "csv_row"
+  delete_tombstone:
+    enabled: false
+  presence:
+    default: "omit_missing"
+    per_mode:
+      FULL: "omit_missing"
+  output_order:
+    - "id"
+    - "inventory_quantity"
+    - "availability"
+  fields:
+    id:
+      source:
+        path: "product.item_id"
+        required: true
+      transforms:
+        - op: "to_str"
+        - op: "trim"
+        - op: "truncate"
+          args:
+            max_length: 100
+      presence:
+        per_mode:
+          FULL: "error_if_missing"
+    inventory_quantity:
+      source:
+        path: "inventory.quantity"
+        required: false
+      transforms:
+        - op: "to_str"
+        - op: "trim"
+    availability:
+      source:
+        path: "inventory.quantity"
+        required: false
+      transforms:
+        - op: "int_to_availability"
+
+validation:
+  # NOTE: validation rules with applies_to.field use flat dict.get() lookup,
+  # but UM items from connector are nested dicts (product.item_id, inventory.quantity).
+  # Flat lookup yields MISSING → false DROP. Required-field checks rely on
+  # connector_mapping required:true + mapping-level source.required + presence.error_if_missing.
+  rules: []

@@ -1,0 +1,26 @@
+# SftpDeliveryClient IaC — generic SFTP client
+# Docs: config/docs/04_publishing.md
+
+host: sftp.example.com
+# optional; default: 22
+# port: 22
+username: my-feed-account
+remote_path: /feeds/product_feed.jsonl.gz
+
+# auth: choose one of password_ref or private_key_ref
+private_key_ref:
+  kind: file
+  value: /run/secrets/sftp_key
+
+# alternative: password-based authentication
+# password_ref:
+#   kind: env
+#   value: SFTP_PASSWORD
+
+transport:
+  timeout_seconds: 120
+  # optional; recommended values shown
+  # max_retries: 3
+  # retry_backoff_seconds: 0.0
+  # verify_ssh_host_key: true
+  # ssh_algorithms: []

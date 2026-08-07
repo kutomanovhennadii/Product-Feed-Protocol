@@ -1,0 +1,16 @@
+{
+    "items": [
+        {
+            "id": "p-1",
+            "title": "Product A",
+            "description": "Desc A",
+            "url": "https://example.com/p1"
+        },
+        {
+            "id": "p-2",
+            "title": "Product B",
+            "description": "Desc B",
+            "url": "https://example.com/p2"
+        }
+    ]
+}

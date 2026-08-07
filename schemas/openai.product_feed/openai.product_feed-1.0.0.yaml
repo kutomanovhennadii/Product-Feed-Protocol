@@ -1,0 +1,98 @@
+header:
+  protocol_id: "openai.product_feed"
+  schema_version: "1.0.0"
+  artifact_profile: "catalog_snapshot"
+  title: "OpenAI Product Feed (JSONL) — minimal compile-safe schema"
+  source_protocol:
+    provider: "openai"
+    url: "N/A"
+    revision: "snapshot"
+    retrieved_at: "2026-02-16"
+
+input:
+  um_contract: "Unified Model items as dict-like objects."
+
+modes:
+  presence_semantics:
+    default: "omit_missing"
+    per_mode:
+      FULL: "omit_missing"
+      DIFF: "omit_missing"
+      DELETE: "omit_missing"
+
+output:
+  output_kind: "json_object"
+  writer_id: "jsonl"
+  writer_config:
+    ensure_ascii: false
+    sort_keys: true
+    omit_nulls: true
+    line_terminator: "\n"
+  artifact:
+    content_type: "application/x-ndjson"
+    file_ext: ".jsonl"
+    file_extension: ".jsonl"
+    encoding: "utf-8"
+
+mapping:
+  output_kind: "json_object"
+  presence:
+    default: "omit_missing"
+    per_mode:
+      FULL: "omit_missing"
+      DIFF: "omit_missing"
+      DELETE: "omit_missing"
+  fields:
+    item_id:
+      source:
+        path: "item_id"
+        required: true
+      transforms:
+        - op: "to_str"
+        - op: "trim"
+        - op: "truncate"
+          args:
+            max_length: 100
+    title:
+      source:
+        path: "title"
+        required: false
+      transforms:
+        - op: "to_str"
+        - op: "trim"
+        - op: "truncate"
+          args:
+            max_length: 150
+    description:
+      source:
+        path: "description"
+        required: false
+      transforms:
+        - op: "to_str"
+        - op: "trim"
+        - op: "truncate"
+          args:
+            max_length: 5000
+      presence:
+        per_mode:
+          DIFF: "emit_null_if_missing"
+          DELETE: "emit_null_if_missing"
+    url:
+      source:
+        path: "url"
+        required: false
+      transforms:
+        - op: "to_str"
+        - op: "trim"
+
+validation:
+  rules:
+    - id: "openai.item_id.required"
+      applies_to:
+        field: "item_id"
+      module_id: "required"
+      config: {}
+      on_fail:
+        code: "OPENAI_ITEM_ID_REQUIRED"
+        message: "item_id is required"
+        severity_hint: "ERROR"

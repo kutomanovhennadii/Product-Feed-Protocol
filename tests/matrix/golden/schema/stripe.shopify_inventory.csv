@@ -1,0 +1,4 @@
+id,inventory_quantity,availability
+48513488879793,42,in_stock
+48513488879794,0,out_of_stock
+48513488879795,-3,out_of_stock

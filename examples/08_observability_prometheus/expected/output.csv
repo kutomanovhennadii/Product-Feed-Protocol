@@ -1,0 +1,3 @@
+id,title,description,link,availability
+OBS-001,Observability Record 001,Metrics sample 001,https://example.com/observability/001,in_stock
+OBS-002,Observability Record 002,Metrics sample 002,https://example.com/observability/002,out_of_stock

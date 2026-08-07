@@ -1,0 +1,14 @@
+input:
+  format: csv
+  config:
+    connector_mapping: ./mapping.yaml
+
+producer:
+  schema_file: ./stripe.product_feed-1.0.0.yaml
+  policy_file: ./policies.yaml
+
+output:
+  archive_type: noop
+  archive_config: ./archive.noop.yaml
+  client_type: noop
+  client_config: ./client.noop.yaml

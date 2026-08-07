@@ -1,0 +1,22 @@
+input:
+  format: csv
+  config:
+    connector_mapping: ./mapping.yaml
+
+producer:
+  schema_file: ../schemas/stripe.product_feed/stripe.product_feed-1.0.0.yaml
+  policy_file: ./policies.yaml
+
+output:
+  archive_type: local
+  archive_config: ./archive/local.yaml
+  client_type: noop
+  client_config: ./clients/noop.yaml
+
+observability:
+  labels:
+    environment: local
+    pipeline: product-feed
+  logging:
+    level: INFO
+    flood_control_config: {}

@@ -1,0 +1,6 @@
+version: "1.0"
+core:
+  strictness:
+    strategy: "drop_invalid"
+  fault_isolation:
+    strategy: "SKIP_ITEM"

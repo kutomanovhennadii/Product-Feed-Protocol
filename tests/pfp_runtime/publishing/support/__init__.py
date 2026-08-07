@@ -1,0 +1,1 @@
+"""Publishing support tests package."""

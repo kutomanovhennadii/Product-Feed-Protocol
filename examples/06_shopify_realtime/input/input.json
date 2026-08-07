@@ -1,0 +1,33 @@
+[
+    {
+        "id": "gid://shopify/ProductVariant/201",
+        "title": "Classic T-Shirt - Black / M",
+        "descriptionHtml": "<p>Premium <b>cotton</b> tee.</p>",
+        "onlineStoreUrl": "https://example.myshopify.com/products/classic-tee",
+        "vendor": "BrandCo",
+        "barcode": "0123456789012",
+        "sku": "CT-BLK-M",
+        "image": "https://cdn.shopify.com/classic-tee-main.jpg",
+        "media": "https://cdn.shopify.com/classic-tee-1.jpg",
+        "category": "Apparel & Accessories > Clothing > Shirts & Tops",
+        "productType": "Custom T-Shirts",
+        "weight": "0.3 kg",
+        "__parentProductId": "gid://shopify/Product/456",
+        "__parentTitle": "Classic T-Shirt",
+        "color": "Black",
+        "size": "M",
+        "availableForSale": true,
+        "inventoryQuantity": 42,
+        "price": "29.99",
+        "compareAtPrice": "39.99",
+        "shipping": [
+            {
+                "country": "US",
+                "service": "Standard Shipping",
+                "price": "5.99 USD"
+            }
+        ],
+        "stripe_tax_code_override": "",
+        "taxable": true
+    }
+]

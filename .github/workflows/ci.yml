@@ -1,0 +1,121 @@
+name: PFP CI
+
+on:
+  push:
+    branches: [ "**" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  secret-scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Gitleaks Secret Scan
+        uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  lint-and-smoke:
+    needs: [secret-scan]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+          
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install ruff black mypy pytest
+
+      - name: Validate agent contract
+        run: pytest tests/test_agent_contract.py -q
+          
+      - name: Lint with Ruff
+        run: ruff check src tests
+        
+      - name: Lint with Black
+        run: black --check src tests
+        
+      - name: Type check with Mypy
+        run: mypy src
+        
+      - name: Smoke Test Install
+        run: pip install .
+        
+      - name: Smoke Test Execution
+        run: python -c "from pfp_runtime import PFPFactory; print(PFPFactory)"
+
+  test-fast:
+    # Экономный прогон: только для push в feature-ветки (не main, не PR)
+    if: github.event_name == 'push' && github.ref != 'refs/heads/main'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+          
+      - name: Install test dependencies
+        run: pip install -e . pytest
+        
+      - name: Run fast tests (Unit & Integration)
+        run: pytest tests/ -m "not matrix and not e2e and not perf and not chaos"
+
+  test-full:
+    # Полный прогон: для PR в main и push в main
+    if: github.event_name == 'pull_request' || github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+          
+      - name: Install test dependencies
+        run: pip install -e . pytest pytest-cov
+        
+      - name: Heavy Path (Unit, Integration, Matrix, E2E) + Coverage
+        run: pytest tests/ -m "not perf and not chaos" --cov=src --cov-fail-under=100
+        
+      - name: Extremes - Perf tests
+        run: pytest tests/ -m perf
+        
+      - name: Extremes - Chaos tests
+        run: pytest tests/ -m chaos
+
+  build-artifacts:
+    # Сборка пакетов только после успешных полных тестов
+    needs: [lint-and-smoke, test-full]
+    if: github.event_name == 'pull_request' || github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+          
+      - name: Install build tools
+        run: pip install build
+        
+      - name: Build sdist and wheel
+        run: python -m build
+        
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: pfp-packages
+          path: dist/*
+          retention-days: 7

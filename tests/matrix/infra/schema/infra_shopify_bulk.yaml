@@ -1,0 +1,25 @@
+input:
+  format: jsonl
+  config:
+    connector_mapping: ../../../../config/shopify_bulk/mapping_shopify_bulk.yaml
+
+producer:
+  schema_file: ../../../../schemas/stripe.shopify_bulk/stripe.shopify_bulk-1.0.0.yaml
+  policy_file: ../../../../config/shopify_bulk/policies_shopify_bulk.yaml
+  tax_mapping_file: ../../../../config/tax_mappings/shopify_to_stripe_ptc.json
+
+output:
+  archive_type: noop
+  archive_config: ../../../../config/archive/noop.yaml
+  client_type: noop
+  client_config: ../../../../config/clients/noop.yaml
+
+observability:
+  labels:
+    environment: test
+    pipeline: matrix-schema-shopify-bulk
+  logging:
+    level: INFO
+    flood_control_config: {}
+  telemetry:
+    provider: none

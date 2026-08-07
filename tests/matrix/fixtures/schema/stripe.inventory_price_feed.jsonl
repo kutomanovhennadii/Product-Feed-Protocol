@@ -1,0 +1,5 @@
+{"product_item_id": "SKU-200", "item_id": "SKU-200", "price": "19.99", "currency": "USD", "inventory_quantity": 15, "availability": "in_stock"}
+{"product_item_id": "SKU-201", "item_id": "SKU-201", "price": "249.00", "currency": "USD", "inventory_quantity": 0, "availability": "out_of_stock"}
+{"product_item_id": "SKU-202", "item_id": "SKU-202", "price": "89.50", "currency": "EUR", "inventory_quantity": 4, "availability": "preorder"}
+{"product_item_id": "SKU-203", "item_id": "SKU-203", "price": "12.00", "currency": "GBP", "inventory_quantity": 120, "availability": "in_stock"}
+{"product_item_id": "SKU-204", "item_id": "SKU-204", "price": "0.00", "currency": "USD", "inventory_quantity": 1, "availability": "backorder"}

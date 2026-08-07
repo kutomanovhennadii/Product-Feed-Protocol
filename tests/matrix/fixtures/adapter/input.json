@@ -1,0 +1,29 @@
+[
+    {
+        "sku": "SKU-001",
+        "item_id": "SKU-001",
+        "name": "Atlas Bottle",
+        "description": "Insulated steel bottle",
+        "url": "https://example.test/products/atlas-bottle",
+        "availability": "in_stock",
+        "delete_flag": false
+    },
+    {
+        "sku": "SKU-002",
+        "item_id": "SKU-002",
+        "name": "Boreal Lamp",
+        "description": "",
+        "url": "https://example.test/products/boreal-lamp",
+        "availability": "out_of_stock",
+        "delete_flag": false
+    },
+    {
+        "sku": "SKU-003",
+        "item_id": "SKU-003",
+        "name": "Cinder Mug",
+        "description": "Ceramic mug with matte glaze",
+        "url": "https://example.test/products/cinder-mug",
+        "availability": "preorder",
+        "delete_flag": false
+    }
+]

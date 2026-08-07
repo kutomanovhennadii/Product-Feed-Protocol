@@ -1,0 +1,6 @@
+# HttpDeliveryClient IaC — minimal config for smoke testing
+# Docs: config/docs/04_publishing.md
+endpoint: https://api.example.com/feed
+# max_body_bytes: 104857600  # 100 MB default — raise if exceeded; use http_streaming for larger payloads
+transport:
+  timeout_seconds: 30

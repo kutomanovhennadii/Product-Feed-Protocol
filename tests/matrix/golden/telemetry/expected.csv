@@ -1,0 +1,4 @@
+id,title,description,link,availability
+SKU-001,Atlas Bottle,Insulated steel bottle,https://example.test/products/atlas-bottle,in_stock
+SKU-002,Boreal Lamp,,https://example.test/products/boreal-lamp,out_of_stock
+SKU-003,Cinder Mug,Ceramic mug with matte glaze,https://example.test/products/cinder-mug,preorder

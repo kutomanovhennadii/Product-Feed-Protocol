@@ -1,0 +1,20 @@
+{
+  "archivers": {
+    "local": {
+      "class": "pfp_runtime.publishing.archivers.local_archiver.LocalArchiver",
+      "iac_class": "pfp_runtime.publishing.archivers.local_archiver.LocalArchiverIaC"
+    },
+    "s3": {
+      "class": "pfp_runtime.publishing.archivers.s3_archiver.S3Archiver",
+      "iac_class": "pfp_runtime.publishing.archivers.s3_archiver.S3ArchiverIaC"
+    },
+    "s3_compat": {
+      "class": "pfp_runtime.publishing.archivers.s3_compat_archiver.S3CompatArchiver",
+      "iac_class": "pfp_runtime.publishing.archivers.s3_compat_archiver.S3CompatArchiverIaC"
+    },
+    "noop": {
+      "class": "pfp_runtime.publishing.archivers.noop_archiver.NoopArchiver",
+      "iac_class": "pfp_runtime.publishing.archivers.noop_archiver.NoopArchiverIaC"
+    }
+  }
+}

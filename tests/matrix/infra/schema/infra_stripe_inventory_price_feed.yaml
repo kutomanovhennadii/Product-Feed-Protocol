@@ -1,0 +1,24 @@
+input:
+  format: jsonl
+  config:
+    connector_mapping: ../../mappings/inventory_price.yaml
+
+producer:
+  schema_file: ../../../../schemas/stripe.inventory_price_feed/stripe.inventory_price_feed-1.0.0.yaml
+  policy_file: ../../../../config/policies.yaml
+
+output:
+  archive_type: noop
+  archive_config: ../../../../config/archive/noop.yaml
+  client_type: noop
+  client_config: ../../../../config/clients/noop.yaml
+
+observability:
+  labels:
+    environment: test
+    pipeline: matrix-schema-stripe-inventory-price-feed
+  logging:
+    level: INFO
+    flood_control_config: {}
+  telemetry:
+    provider: none

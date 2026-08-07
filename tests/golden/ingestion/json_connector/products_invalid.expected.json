@@ -1,0 +1,30 @@
+{
+    "items": [
+        {
+            "item_id": "p-1",
+            "title": "A",
+            "description": "D1",
+            "url": "https://e/p1"
+        },
+        {
+            "item_id": "p-2",
+            "title": "B",
+            "description": "D2",
+            "url": "https://e/p2"
+        }
+    ],
+    "diagnostics": [
+        {
+            "code": "INGESTION.JSON_PARSE_ERROR",
+            "path": "ingestion:jsonl",
+            "item_ref": "line:2",
+            "action": "DROP"
+        },
+        {
+            "code": "INGESTION.JSON_RECORD_SHAPE_ERROR",
+            "path": "ingestion:jsonl",
+            "item_ref": "line:3",
+            "action": "DROP"
+        }
+    ]
+}

@@ -1,0 +1,24 @@
+input:
+  format: json
+  config:
+    connector_mapping: ./mapping_shopify_inventory.yaml
+
+producer:
+  schema_file: ../../schemas/stripe.shopify_inventory/stripe.shopify_inventory-1.0.0.yaml
+  policy_file: ./policies_shopify_inventory.yaml
+
+output:
+  archive_type: noop
+  archive_config: ../archive/noop.yaml
+  client_type: noop
+  client_config: ../clients/noop.yaml
+
+observability:
+  labels:
+    environment: local
+    pipeline: shopify-inventory
+  logging:
+    level: INFO
+    flood_control_config: {}
+  telemetry:
+    provider: none

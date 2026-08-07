@@ -1,0 +1,15 @@
+# HttpDeliveryClient IaC — Stripe Product Feed (full catalog upsert/delete)
+# Schema: stripe.product_feed-1.0.0
+# Docs: config/docs/04_publishing.md
+
+endpoint: https://api.stripe.com/v2/product-catalog/product-feed
+
+api_key_ref:
+  kind: env
+  value: STRIPE_API_KEY
+
+transport:
+  timeout_seconds: 60
+  # max_retries: 3
+  # retry_backoff_seconds: 2.0
+  # verify_tls: true
