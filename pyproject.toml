@@ -89,3 +89,26 @@ profile = "black"
 skips = ["B101"]
 exclude = ["tests", "scripts"]
 
+[tool.mypy]
+# boto3 ships no py.typed marker. boto3-stubs would type it, but it also
+# surfaces a separate batch of Optional[str] mismatches in the S3 archivers,
+# so the untyped import is silenced here rather than widened into a refactor.
+[[tool.mypy.overrides]]
+module = ["boto3", "boto3.*", "botocore", "botocore.*"]
+ignore_missing_imports = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+markers = [
+  "perf: performance and soak tests (excluded from the default run)",
+  "chaos: fault-injection tests (excluded from the default run)",
+]
+
+[tool.coverage.report]
+exclude_lines = [
+  "pragma: no cover",
+  "if TYPE_CHECKING:",
+  # Protocol / abstract method bodies are declarations, never executed.
+  "^\\s*\\.\\.\\.$",
+]
+

@@ -32,7 +32,11 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install ruff black mypy pytest
+          pip install -e ".[prometheus,webhook,s3,sftp]"
+          # Pinned to the ranges declared in pyproject.toml: unpinned linters
+          # resolve to newer majors whose formatting/rules disagree with this
+          # codebase, so CI must not float.
+          pip install "ruff>=0.15.0,<0.16.0" "black>=24.7b0,<25.0" mypy pytest types-PyYAML types-paramiko
 
       - name: Validate agent contract
         run: pytest tests/test_agent_contract.py -q
@@ -65,10 +69,12 @@ jobs:
           python-version: "3.10"
           
       - name: Install test dependencies
-        run: pip install -e . pytest
-        
+        run: |
+          pip install -e ".[prometheus,webhook,s3,sftp]"
+          pip install pytest pytest-timeout "moto[s3]"
+
       - name: Run fast tests (Unit & Integration)
-        run: pytest tests/ -m "not matrix and not e2e and not perf and not chaos"
+        run: pytest tests/ --ignore=tests/matrix --ignore=tests/e2e -m "not perf and not chaos"
 
   test-full:
     # Полный прогон: для PR в main и push в main
@@ -83,8 +89,10 @@ jobs:
           python-version: "3.10"
           
       - name: Install test dependencies
-        run: pip install -e . pytest pytest-cov
-        
+        run: |
+          pip install -e ".[prometheus,webhook,s3,sftp]"
+          pip install pytest pytest-cov pytest-timeout "moto[s3]"
+
       - name: Heavy Path (Unit, Integration, Matrix, E2E) + Coverage
         run: pytest tests/ -m "not perf and not chaos" --cov=src --cov-fail-under=100
         

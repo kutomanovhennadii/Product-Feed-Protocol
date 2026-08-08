@@ -152,7 +152,9 @@ def test_prometheus_handler_reuses_existing_metric_for_same_default_registry(
         {"target": "stripe.product_feed", "mode": "FULL"},
     )
 
-    payload_lines = prometheus_client.generate_latest(registry).decode("utf-8").splitlines()
+    payload_lines = (
+        prometheus_client.generate_latest(registry).decode("utf-8").splitlines()
+    )
     assert (
         payload_lines.count(
             "# HELP pfp_stage_duration_seconds Duration of pipeline stages in seconds."

@@ -27,9 +27,12 @@ You can set up a completely working local development environment in under 10 mi
    ```
 3. Install the package in editable mode with development dependencies:
    ```bash
-   pip install -e .
-   pip install pytest pytest-cov ruff black mypy build
+   pip install -e ".[prometheus,webhook,s3,sftp]"
+   pip install pytest pytest-cov pytest-timeout "moto[s3]" ruff black mypy build
    ```
+   The extras are required, not optional, for development: modules such as the S3
+   archiver and the SFTP client import `boto3` / `paramiko` at module load time, and
+   the 100% coverage gate measures them.
 
 You are now ready to develop! To verify your setup, run the smoke test:
 ```bash
@@ -56,7 +59,7 @@ Our testing pipeline is robust and split into categories to save developer time.
 ### Fast Path (Local Development)
 While developing, you only need to run Unit and Integration tests. This should execute very quickly:
 ```bash
-pytest tests/ -m "not matrix and not e2e and not perf and not chaos"
+pytest tests/ --ignore=tests/matrix --ignore=tests/e2e -m "not perf and not chaos"
 ```
 
 ### Full Pre-commit Validation

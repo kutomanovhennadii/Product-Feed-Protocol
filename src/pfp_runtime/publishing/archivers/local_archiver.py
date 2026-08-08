@@ -88,7 +88,10 @@ class LocalArchiver:
             raise LocalArchiverError(
                 "failed to prepare output_dir: " + str(output_dir)
             ) from exc
-        if not output_dir.is_dir():
+        if not output_dir.is_dir():  # pragma: no cover — defensive
+            # ensure_directory() already raises when the path exists as a file,
+            # so this guard only fires if the path is replaced concurrently
+            # between mkdir() and this check.
             raise LocalArchiverError(
                 "output_dir is not a directory: " + str(output_dir)
             )

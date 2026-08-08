@@ -65,7 +65,9 @@ _ALLOWED_STAGES: Set[str] = {
     "publish",
 }
 
-_STAGE_DURATION_BY_REGISTRY = weakref.WeakKeyDictionary()
+_STAGE_DURATION_BY_REGISTRY: "weakref.WeakKeyDictionary[Any, Any]" = (
+    weakref.WeakKeyDictionary()
+)
 
 
 def _import_prometheus() -> Any:

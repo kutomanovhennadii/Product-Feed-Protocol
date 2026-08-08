@@ -61,9 +61,15 @@ def test_agent_contract_json_matches_runtime_surface() -> None:
 
     assert contract["entrypoints"]["module"] == EXPECTED_ENTRYPOINTS["module"]
     assert contract["entrypoints"]["factory"] == EXPECTED_ENTRYPOINTS["factory"]
-    assert contract["entrypoints"]["factory_method"] == EXPECTED_ENTRYPOINTS["factory_method"]
+    assert (
+        contract["entrypoints"]["factory_method"]
+        == EXPECTED_ENTRYPOINTS["factory_method"]
+    )
     assert contract["entrypoints"]["worker"] == EXPECTED_ENTRYPOINTS["worker"]
-    assert contract["entrypoints"]["factory_helper"] == EXPECTED_ENTRYPOINTS["factory_helper"]
+    assert (
+        contract["entrypoints"]["factory_helper"]
+        == EXPECTED_ENTRYPOINTS["factory_helper"]
+    )
     assert "worker.run(" in contract["entrypoints"]["usage_example"]
     assert "read_bytes()" in contract["entrypoints"]["usage_example"]
 
@@ -79,14 +85,14 @@ def test_agent_contract_references_and_ci_step_exist() -> None:
     root_dir = _root_dir()
 
     for key, rel_path in contract["references"].items():
-        assert (root_dir / rel_path).exists(), (
-            f"Reference '{key}' points to non-existent file: {rel_path}"
-        )
+        assert (
+            root_dir / rel_path
+        ).exists(), f"Reference '{key}' points to non-existent file: {rel_path}"
 
     diff_ref = contract["diff_semantics"]["reference"]
-    assert (root_dir / diff_ref).exists(), (
-        f"diff_semantics reference points to non-existent file: {diff_ref}"
-    )
+    assert (
+        root_dir / diff_ref
+    ).exists(), f"diff_semantics reference points to non-existent file: {diff_ref}"
 
     ci_source = _read_text(".github/workflows/ci.yml")
     assert "Validate agent contract" in ci_source
@@ -102,7 +108,9 @@ def test_agent_docs_match_runtime_contract() -> None:
     ingestion_guard_source = _read_text("src/pfp_runtime/pipeline/ingestion_guard.py")
     core_guard_source = _read_text("src/pfp_runtime/pipeline/core_guard.py")
     publish_guard_source = _read_text("src/pfp_runtime/pipeline/publish_guard.py")
-    pipeline_runner_source = _read_text("src/pfp_runtime/orchestration/pipeline_runner.py")
+    pipeline_runner_source = _read_text(
+        "src/pfp_runtime/orchestration/pipeline_runner.py"
+    )
 
     assert "def build_worker(" in factory_source
     assert "infra_path: Union[str, Path]" in factory_source
