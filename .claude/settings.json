@@ -1,29 +1,29 @@
 {
   "permissions": {
     "allow": [
-      "PowerShell(git -C C:\\\\Repository\\\\A2S-protocol init)",
-      "PowerShell(git -C C:\\\\Repository\\\\A2S-protocol branch -M main)",
-      "PowerShell(git -C C:\\\\Repository\\\\A2S-protocol remote add origin https://github.com/kutomanovhennadii/A2S-protocol.git)",
-      "PowerShell(git -C C:\\\\Repository\\\\A2S-protocol status --short)",
-      "PowerShell(git -C C:\\\\Repository\\\\A2S-protocol symbolic-ref HEAD refs/heads/main)",
-      "PowerShell(git -C C:\\\\Repository\\\\A2S-protocol check-ignore .claude .env)",
-      "PowerShell(git -C C:\\\\Repository\\\\A2S-protocol config user.email)",
-      "PowerShell(git -C C:\\\\Repository\\\\A2S-protocol config user.name)",
-      "PowerShell(git -C C:\\\\Repository\\\\A2S-protocol add -A)",
-      "PowerShell(git -C C:\\\\Repository\\\\A2S-protocol log --oneline -1)",
-      "PowerShell(git -C C:\\\\Repository\\\\A2S-protocol push -u origin main)",
-      "PowerShell(git -C C:\\\\Repository\\\\A2S-protocol config user.name \"Hennadii Kutomanov\")",
-      "PowerShell(git -C C:\\\\Repository\\\\A2S-protocol config user.email \"hennadii.kutomanov@letme-agency.com\")",
-      "PowerShell(git -C C:\\\\Repository\\\\A2S-protocol commit --amend --reset-author --no-edit)",
-      "PowerShell(git -C C:\\\\Repository\\\\A2S-protocol log -1 --format=\"%h %an <%ae>\")",
-      "PowerShell(git -C C:\\\\Repository\\\\A2S-protocol push --force-with-lease origin main)",
-      "PowerShell(Get-ChildItem -Recurse -File C:\\\\Repository\\\\A2S-protocol\\\\docs | Select-Object @{n='Path';e={$_.FullName.Replace\\('C:\\\\Repository\\\\A2S-protocol\\\\',''\\)}}, @{n='KB';e={[math]::Round\\($_.Length/1KB,1\\)}})",
-      "PowerShell(git -C C:\\\\Repository\\\\A2S-protocol remote -v)",
-      "PowerShell(git -C C:\\\\Repository\\\\A2S-protocol ls-remote --get-url origin)",
-      "PowerShell(git -C C:\\\\Repository\\\\A2S-protocol remote set-url origin https://github.com/kutomanovhennadii/Product-Feed-Protocol.git)",
-      "PowerShell(git -C C:\\\\Repository\\\\A2S-protocol ls-remote --heads origin 2>&1)",
-      "PowerShell(git -C C:\\\\Repository\\\\A2S-protocol push origin main)",
-      "Bash(python -c ' *)"
+      "Read",
+      "Glob",
+      "Grep",
+      "Bash(python -m pytest:*)",
+      "Bash(python -m ruff:*)",
+      "Bash(python -m black:*)",
+      "Bash(python -m mypy:*)",
+      "Bash(python -m coverage:*)",
+      "Bash(git status:*)",
+      "Bash(git diff:*)",
+      "Bash(git log:*)",
+      "Bash(git show:*)",
+      "Bash(git branch:*)",
+      "PowerShell(git status:*)",
+      "PowerShell(git diff:*)",
+      "PowerShell(git log:*)",
+      "PowerShell(git show:*)",
+      "PowerShell(git branch:*)"
+    ],
+    "deny": [
+      "Read(./.env)",
+      "Read(./.env.*)",
+      "Read(./internal/**)"
     ]
   }
 }

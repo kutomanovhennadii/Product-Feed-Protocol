@@ -73,3 +73,6 @@ examples/**/expected/diagnostics_actual.json
 examples/**/archive_output/
 downloads/
 temp/
+# Claude Code — personal, machine-specific settings
+.claude/settings.local.json
+.claude/*.local.json
