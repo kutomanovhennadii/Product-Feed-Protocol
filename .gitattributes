@@ -1,0 +1,13 @@
+# Normalize all text files to LF in the repository.
+* text=auto
+
+# Schema documents are content-addressed: schemas/schema_manifest.json pins a
+# SHA-256 per file, and the runtime verifies it on load. A CRLF checkout would
+# change those hashes and break integrity verification on one platform while
+# passing on another, so these files must be byte-identical everywhere.
+schemas/**/*.yaml text eol=lf
+schemas/schema_manifest.json text eol=lf
+
+# Golden test fixtures are compared byte-for-byte.
+tests/**/golden/** text eol=lf
+tests/golden/** text eol=lf
