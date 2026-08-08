@@ -97,11 +97,18 @@ def run_with_peak_memory(
     worker: PFPWorker,
     payload: bytes,
 ) -> tuple[ExecutionReport, float]:
-    """Execute one run and measure its traced peak memory in MiB."""
+    """Execute a clean SLA run, then a traced run measuring peak memory in MiB.
+
+    The runs are separated on purpose: tracemalloc slows the pipeline roughly
+    3x, so asserting ``report.timings`` from a traced run would measure the
+    profiler, not the pipeline. The returned report comes from the clean run;
+    the peak comes from a second run of the same payload under tracemalloc.
+    """
+    report = worker.run(payload)
     gc.collect()
     tracemalloc.start()
     try:
-        report = worker.run(payload)
+        worker.run(payload)
         _, peak_bytes = tracemalloc.get_traced_memory()
     finally:
         tracemalloc.stop()

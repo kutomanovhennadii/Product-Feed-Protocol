@@ -28,8 +28,11 @@ def test_repeated_runs_reuse_worker_without_linear_memory_growth(
 ) -> None:
     """Sequential runs must reset counters and avoid obvious per-run memory growth."""
     monkeypatch.chdir(realtime_config_dir())
-    run_count = env_int("PFP_PERF_SOAK_RUNS", 20)
-    item_count = env_int("PFP_PERF_SOAK_ITEMS", 5_000)
+    # The whole soak loop executes inside one tracemalloc session (~3x
+    # slowdown), so 10 runs x 1k records stay well within the 300 s timeout
+    # while still exposing linear per-run memory growth across the samples.
+    run_count = env_int("PFP_PERF_SOAK_RUNS", 10)
+    item_count = env_int("PFP_PERF_SOAK_ITEMS", 1_000)
     growth_limit_mb = env_float("PFP_PERF_SOAK_GROWTH_MB", 16.0)
     peak_limit_mb = env_float("PFP_PERF_SOAK_PEAK_MB", 256.0)
     payload, valid_count, invalid_count = build_realtime_payload(

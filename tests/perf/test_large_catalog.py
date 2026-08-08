@@ -23,7 +23,11 @@ pytestmark = [pytest.mark.perf, pytest.mark.timeout(300)]
 def test_large_catalog_runtime_satisfies_sla(monkeypatch: pytest.MonkeyPatch) -> None:
     """A large synthetic catalog must stay within runtime and memory budgets."""
     monkeypatch.chdir(realtime_config_dir())
-    item_count = env_int("PFP_PERF_LARGE_CATALOG_ITEMS", 100_000)
+    # 20k records ≈ 16 MB payload — half of the 32 MiB max_input_bytes limit
+    # declared in connectors_registry.json. Larger defaults would be rejected
+    # by the adapter contract before any performance is measured; scale up via
+    # the env knob only together with a config that raises the input limit.
+    item_count = env_int("PFP_PERF_LARGE_CATALOG_ITEMS", 20_000)
     sla_seconds = env_float("PFP_PERF_LARGE_CATALOG_SLA_SECONDS", 60.0)
     peak_limit_mb = env_float("PFP_PERF_LARGE_CATALOG_PEAK_MB", 512.0)
     payload, valid_count, invalid_count = build_realtime_payload(
